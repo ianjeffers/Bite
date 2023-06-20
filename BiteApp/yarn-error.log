@@ -1,0 +1,46 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js install
+
+PATH: 
+  C:\Program Files\Oculus\Support\oculus-runtime;C:\Python310\Scripts\;C:\Python310\;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files\AdoptOpenJDK\jdk-11.0.11.9-hotspot\bin;C:\Program Files\AdoptOpenJDK\jdk-8.0.292.10-hotspot\bin;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\MATLAB\R2021a\bin;C:\Program Files\Docker\Docker\resources\bin;C:\ffmpeg\bin;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\Program Files (x86)\dotnet\;C:\webdrivers;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\dotnet\;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\18053\AppData\Local\Microsoft\WindowsApps;C:\Users\18053\AppData\Local\GitHubDesktop\bin;C:\Users\18053\AppData\Roaming\npm;C:\webdrivers;C:\Program Files (x86)\Nmap;C:\Program Files\nodejs;C:\Users\18053\AppData\Local\Yarn\bin;C:\Users\18053\.dotnet\tools;C:\Program Files\PostgreSQL\15\bin;
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  14.18.1
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: ENOSPC: no space left on device, copyfile 'C:\Users\18053\AppData\Local\Yarn\Cache\v6\npm-jsc-android-250231.0.0-91720f8df382a108872fa4b3f558f33ba5e95262-integrity\node_modules\jsc-android\dist\org\webkit\android-jsc\r250231\android-jsc-r250231.aar' -> 'C:\Users\18053\Desktop\Bite\BiteApp\node_modules\jsc-android\dist\org\webkit\android-jsc\r250231\android-jsc-r250231.aar'
+
+npm manifest: 
+  {
+    "name": "biteapp",
+    "version": "1.0.0",
+    "main": "node_modules/expo/AppEntry.js",
+    "scripts": {
+      "start": "expo start",
+      "android": "expo start --android",
+      "ios": "expo start --ios",
+      "web": "expo start --web"
+    },
+    "dependencies": {
+      "expo": "~48.0.18",
+      "expo-status-bar": "~1.4.4",
+      "react": "18.2.0",
+      "react-native": "0.71.8"
+    },
+    "devDependencies": {
+      "@babel/core": "^7.20.0"
+    },
+    "private": true
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
