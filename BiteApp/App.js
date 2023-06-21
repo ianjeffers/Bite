@@ -1,20 +1,25 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text } from 'react-native';
+import { getGpt3Data, getWikipediaData } from './api';
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+    const [educationContext, setEducationContext] = useState(null);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+    useEffect(() => {
+        if (educationContext) {
+            const fetchData = async () => {
+                const wikipediaData = await getWikipediaData(educationContext);
+                const gpt3Data = await getGpt3Data(wikipediaData[2][0]);
+                console.log(gpt3Data);
+            }
+            fetchData();
+        }
+    }, [educationContext]);
+
+    return (
+        <View>
+            <Text>Bite - Micro-learning App</Text>
+            {/* Additional components and layout here */}
+        </View>
+    );
+}
