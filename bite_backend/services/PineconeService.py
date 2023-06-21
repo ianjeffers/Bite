@@ -1,12 +1,19 @@
 # services/PineconeService.py
 import pinecone
+import os
+
+from dotenv import load_dotenv
 from services.HuggingFaceService import HuggingFaceService
 
 class PineconeService:
     def __init__(self, index_name):
         # self.index_name = index_name
+
+        load_dotenv()
+        pinecone_api_key = os.getenv("PINECONE_API_KEY")
+
         self.index_name = "bite"
-        pinecone.init(api_key="593cc990-885a-49cc-9d2f-bfb49de1d363", environment="us-west1-gcp-free") 
+        pinecone.init(api_key=pinecone_api_key, environment="us-west1-gcp-free") 
         self.pinecone_client = pinecone.Index(self.index_name)
         self.hugging_face_service = HuggingFaceService()
 
