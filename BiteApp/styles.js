@@ -1,5 +1,38 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
+export const fillInTheBlanksScreenStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,  
+    backgroundColor: '#e0e0e0'
+  },
+  sentence: {
+    fontSize: 24,  
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  wordBank: {
+    flexDirection: 'row', 
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    marginVertical: 20,
+    width: '90%', 
+  },
+  correct: {
+    color: '#006400',  
+    fontSize: 22,  
+    fontWeight: 'bold',
+    marginTop: 20 
+  },
+  incorrect: {
+    color: '#8B0000', 
+    fontSize: 22,  
+    fontWeight: 'bold',
+    marginTop: 20 
+  }
+});
 
 export const flashcardScreenStyles = StyleSheet.create({
     wrapper: {
@@ -54,4 +87,129 @@ export const homeScreenStyles = StyleSheet.create({
       backgroundColor: '#FFF',
     },
   });
+  
 
+  export const matchingGameStyles = StyleSheet.create({
+    container: {
+      flex: 1,
+      padding: 10,
+      backgroundColor: '#F5FCFF',
+    },
+    gameContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
+    column: {
+      flex: 1,
+    },
+    gameOverContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    button: {
+      margin: 5,
+      padding: 10,
+      backgroundColor: '#DDDDDD',
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: 5,
+    },
+    correct: {
+      backgroundColor: '#AED581',
+    },
+    text: {
+      fontSize: 18,
+    },
+    timerText: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      textAlign: 'center',
+      marginBottom: 20,
+    },
+    scoreText: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      textAlign: 'center',
+      marginBottom: 20,
+    },
+    gameOverText: {
+      fontSize: 24,
+      fontWeight: 'bold',
+      textAlign: 'center',
+    },
+  });
+
+  export const quizScreenStyles = StyleSheet.create({
+    wrapper: {
+      flex: 1,
+      padding: 10,
+      backgroundColor: '#fff',
+    },
+    button: {
+      alignItems: 'center',
+      backgroundColor: '#DDDDDD',
+      padding: 10,
+      marginTop: 20,
+      borderRadius: 5,
+    },
+    buttonText: {
+      fontSize: 20,
+    },
+    option: {
+      backgroundColor: '#f9f9f9',
+      padding: 10,
+      marginTop: 10,
+      borderRadius: 5,
+      borderWidth: 1,
+      borderColor: '#ddd',
+    },
+    optionText: {
+      fontSize: 18,
+    },
+  });
+
+  export const trueOrFalseScreenStyles = {
+    wrapper: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 16,
+    },
+    questionText: {
+      fontSize: 24,
+      fontWeight: 'bold',
+      textAlign: 'center',
+      marginBottom: 20,
+    },
+    scoreText: {
+      fontSize: 18,
+      fontWeight: 'bold',
+      marginTop: 20,
+    },
+  };
+
+  export const videoContentScreenStyles = StyleSheet.create({
+    wrapper: {
+      flex: 1,
+    },
+    video: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      bottom: 0,
+      right: 0,
+    },
+    contentBox: {
+      position: 'absolute', // this positions the view on top of the video
+      top: 80, // these values can be adjusted to fit your needs
+      left: '20%', // adjust this to make the tweet thinner
+      right: '20%', // adjust this to make the tweet thinner
+      padding: 10,
+      backgroundColor: 'rgba(255,255,255,0.9)',
+      borderRadius: 10, 
+    },
+    content: {
+      fontSize: 16,
+    },
+  });
