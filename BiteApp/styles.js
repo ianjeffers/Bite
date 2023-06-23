@@ -140,6 +140,105 @@ export const homeScreenStyles = StyleSheet.create({
     },
   });
 
+  export const mindMapStyles = StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+    },
+    inputContainer: {
+      position: 'absolute',
+      bottom: 10,
+      left: 10,
+      right: 10,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      padding: 10,
+      backgroundColor: '#fff',
+      borderRadius: 30,
+      borderWidth: 1,
+      borderColor: 'gray',
+    },
+    textInput: {
+      flex: 1,
+      marginRight: 10,
+    },
+    button: {
+      padding: 10,
+    },
+    bubblesContainer: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      padding: 10,
+      marginTop: 20,
+      justifyContent: 'center',
+    },
+    bubble: {
+      borderWidth: 1,
+      borderColor: 'gray',
+      borderRadius: 30,
+      padding: 10,
+      margin: 5,
+      backgroundColor: 'white',
+    },
+    selectedBubble: {
+      borderColor: 'green',
+    },
+    bubbleText: {
+      color: 'gray',
+    },
+    selectedBubbleText: {
+      color: 'green',
+    },
+    loadingContainer: {
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      bottom: 100, // position adjusted above input box
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: 'rgba(255, 255, 255, 0.7)',
+      zIndex: 1, // ensures the loading indicator is placed above other elements
+    },
+  });
+  
+  
+  
+
+  export const profileStyles = StyleSheet.create({
+    profileContainer: {
+        width: '100%',
+        maxWidth: 600,
+        padding: 20,
+        backgroundColor: '#f6f6f6',
+        borderRadius: 10,
+        shadowColor: '#000',
+        shadowOpacity: 0.1,
+        shadowOffset: {
+          width: 0,
+          height: 0,
+        },
+        shadowRadius: 10,
+    },
+    profileInfo: {
+        marginBottom: 20,
+    },
+    profileText: {
+        fontSize: 18,
+    },
+    signOutBtn: {
+        padding: 10,
+        backgroundColor: '#007bff',
+        color: 'white',
+        borderRadius: 5,
+    },
+    signOutBtnText: {
+        color: 'white',
+        fontSize: 16,
+    },
+});
+
   export const quizScreenStyles = StyleSheet.create({
     wrapper: {
       flex: 1,

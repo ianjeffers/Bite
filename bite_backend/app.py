@@ -2,7 +2,7 @@
 from flask import Flask
 from flask_restful import Api
 from flask_cors import CORS
-from resources import ContentList, ContentGeneration, ContentQuery, ContentSimilarity, FlashcardGeneration
+from resources import ContentList, ContentGeneration, ContentQuery, ContentSimilarity, FlashcardGeneration, QuizGeneration, MatchingGeneration, FillInTheBlanksGeneration, TrueOrFalseGeneration, VideoContentGeneration, TopicGeneration
 from models import Content
 from db import db
 import os
@@ -22,6 +22,12 @@ def create_app():
     api.add_resource(ContentQuery, '/query')
     api.add_resource(ContentSimilarity, '/similarity')
     api.add_resource(FlashcardGeneration, '/flashcard')
+    api.add_resource(QuizGeneration, '/quiz')
+    api.add_resource(MatchingGeneration, '/matching')
+    api.add_resource(FillInTheBlanksGeneration, '/blanks')
+    api.add_resource(TrueOrFalseGeneration, '/trueorfalse')
+    api.add_resource(VideoContentGeneration, '/video')
+    api.add_resource(TopicGeneration, '/topics')
 
     return app
 

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { View, Button } from 'react-native';
+import { View } from 'react-native';
 import Swiper from 'react-native-swiper/src';
 import FlashcardScreen from './FlashcardScreen';
 import QuizScreen from './QuizScreen';
@@ -13,8 +13,8 @@ import UserContext from '../contexts/UserContext';
 import MindMapScreen from '../screens/MindMapScreen';
 
 const screens = [
-  // VideoContentScreen,
-  // TrueOrFalseScreen,
+  VideoContentScreen,
+  TrueOrFalseScreen,
   // FillInTheBlanksScreen,
   // MatchingGameScreen,
   // FlashcardScreen,
@@ -43,11 +43,7 @@ const HomeScreen = () => {
       <View style={styles.phoneScreen}>
         <Swiper showsPagination={false} loop={false} showsButtons={false} horizontal={false}>
           {screens.map((ScreenComponent, index) => (
-            <View key={index}>
-              <ScreenComponent />
-              <Button title="Like" onPress={() => handleLike(content)} />
-              <Button title="Dislike" onPress={() => handleDislike(content)} />
-            </View>
+            <ScreenComponent key={index} onLike={handleLike} onDislike={handleDislike} />
           ))}
         </Swiper>
       </View>

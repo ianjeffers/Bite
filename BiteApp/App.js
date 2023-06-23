@@ -1,9 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
+import React from 'react';
 import HomeScreen from './screens/HomeScreen';
+import { ClerkProvider, SignedIn, SignedOut, RedirectToSignIn } from "@clerk/clerk-react";
+import { REACT_APP_CLERK_PUBLISHABLE_KEY } from '@env';
+import UserContextProvider from './contexts/UserContextProvider';
 
-export default function App() {
+if (!REACT_APP_CLERK_PUBLISHABLE_KEY) {
+    throw new Error("Missing Publishable Key")
+}
+
+
+export default function App() { //TODO -> Do this same process to protect MindMap/Profile
     return (
-        <HomeScreen></HomeScreen>
+        <ClerkProvider publishableKey={REACT_APP_CLERK_PUBLISHABLE_KEY}>
+            <SignedIn>
+                <UserContextProvider>
+                    <HomeScreen/>
+                </UserContextProvider>
+            </SignedIn>
+            <SignedOut>
+                <RedirectToSignIn />
+            </SignedOut>
+        </ClerkProvider>
     );
 }

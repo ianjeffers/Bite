@@ -28,19 +28,14 @@ class FlashcardGeneration(Resource):
             return {'message': 'Page does not exist'}, 404
 
         prompt = 'Given the following summary, please create three flashcards of the following form: {"flashcards":[{"Question":"Answer"},...]}. Do not respond with anything besides the JSON, and do not get cut off. \n\n' + summary
-        gpt_response = self.openai_service.generate_json(prompt)
-        print(gpt_response)
+        gpt_response = self.openai_service.generate_json(prompt, 250)
         flashcards_json = json.loads(gpt_response.choices[0].text)
 
         for flashcard in flashcards_json["flashcards"]:
             # Generate the vector for each flashcard
-            print(flashcard)
             flashcard_str = f'Question: {flashcard.get("Question")} Answer: {flashcard.get("Answer")}'
-            print("Flashcard String", flashcard_str)
             vector = self.hugging_face_service.generate_vector(flashcard_str)
-            print("Vector", vector[:5])
             flashcard = self.db_service.save_content(str(flashcard), vector)
-            print("flashcard db thing", flashcard)
             self.pinecone_service.upsert(flashcard.id, vector)
 
-        return {'message': 'Flashcards generated successfully'}, 201
+        return {'message': 'Flashcards generated successfully', 'flashcards': flashcards_json["flashcards"]}, 201
