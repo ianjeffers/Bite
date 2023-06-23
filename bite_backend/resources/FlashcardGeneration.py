@@ -21,7 +21,17 @@ class FlashcardGeneration(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument('topic', type=str, required=True, help='Education topic is required')
         data = parser.parse_args()
-
+        
+        #Dummy Data
+        return {
+            'message': 'Flashcards generated successfully',
+            'content': [
+                {'Question': 'What is the Pythagorean theorem?', 'Answer': 'In geometry, the Pythagorean theorem states that the square of the hypotenuse is equal to the sum of the squares of the other two sides.'},
+                {'Question': 'What is the quadratic formula?', 'Answer': 'The quadratic formula is used in algebra to solve quadratic equations (polynomial equations of the second degree). The general form is ax^2 + bx + c = 0, and the quadratic formula is x = [-b ± sqrt(b^2 - 4ac)] / (2a).'},
+                {'Question': 'What is a parallelogram?', 'Answer': 'A parallelogram is a four-sided figure with opposite sides that are both parallel and equal in length.'}
+            ]
+        }, 201
+        
         # Fetch Wikipedia page 
         summary = self.wikipedia_service.get_summary(data['topic'])
         if summary is None:
@@ -38,4 +48,4 @@ class FlashcardGeneration(Resource):
             flashcard = self.db_service.save_content(str(flashcard), vector)
             self.pinecone_service.upsert(flashcard.id, vector)
 
-        return {'message': 'Flashcards generated successfully', 'flashcards': flashcards_json["flashcards"]}, 201
+        return {'message': 'Flashcards generated successfully', 'content': flashcards_json["flashcards"]}, 201

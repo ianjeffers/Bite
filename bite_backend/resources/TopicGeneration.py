@@ -13,5 +13,4 @@ class TopicGeneration(Resource):
         data = parser.parse_args()
 
         related_topics = self.topic_service.generate_related_topics(data['topic'], data['reason'])
-        print(related_topics)
         return {'related_topics': related_topics}, 200

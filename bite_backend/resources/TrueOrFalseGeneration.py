@@ -20,6 +20,16 @@ class TrueOrFalseGeneration(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument('topic', type=str, required=True, help='Education topic is required')
         data = parser.parse_args()
+        
+        questions_json = {
+        "questions": [
+            {"statement": "Pythagoras was a mathematician.", "is_true": True},
+            {"statement": "Einstein invented the theory of relativity.", "is_true": True},
+            {"statement": "The sun revolves around the earth.", "is_true": False}
+            ]
+        }
+        
+        return {'message': 'True or False questions generated successfully', 'content': questions_json["questions"]}, 201
 
         # Fetch Wikipedia page 
         summary = self.wikipedia_service.get_summary(data['topic'])
@@ -28,15 +38,13 @@ class TrueOrFalseGeneration(Resource):
 
         prompt = 'Given the following summary, please create three true or false questions of the following form: {"questions":[{"statement":"...", "is_true": ...},...]}. Do not respond with anything besides the JSON, and do not get cut off. \n\n' + summary
         gpt_response = self.openai_service.generate_json(prompt, 200)
-        print(gpt_response)
         questions_json = json.loads(gpt_response.choices[0].text)
 
         for question in questions_json["questions"]:
             # Generate the vector for each question
-            print(question)
             question_str = f'Statement: {question.get("statement")} Is true: {question.get("is_true")}'
             vector = self.hugging_face_service.generate_vector(question_str)
             question = self.db_service.save_content(str(question), vector)
             self.pinecone_service.upsert(question.id, vector)
 
-        return {'message': 'True or False questions generated successfully', 'questions': questions_json["questions"]}, 201
+        return {'message': 'True or False questions generated successfully', 'content': questions_json["questions"]}, 201

@@ -24,6 +24,12 @@ class VideoContentGeneration(Resource):
         parser.add_argument('topic', type=str, required=True, help='Education topic is required')
         data = parser.parse_args()
 
+        dummy_content = {
+            'Tweet': "Learn about Pythagoras! He was a smart dude who discovered a neat property of triangles. I'm sure he'd be a blast at parties! #geometry #mathfacts"
+        }
+        
+        return {'message': 'Video content generated successfully', 'content': dummy_content}, 201
+        
         # Fetch Wikipedia page 
         summary = self.wikipedia_service.get_summary(data['topic'])
         if summary is None:
@@ -35,7 +41,6 @@ class VideoContentGeneration(Resource):
         # Create the prompt for OpenAI
         prompt = f'Given the following summary, please create an educational Tweet in a {mood} mood. Please include a specific fact from the summary. Your response should be in JSON format like this: {{"Tweet": "Your tweet here"}}.\n\n' + summary
         gpt_response = self.openai_service.generate_json(prompt, 350)
-        print(gpt_response)
 
         # Extract the Tweet content
         content_json = json.loads(gpt_response.choices[0].text.strip())

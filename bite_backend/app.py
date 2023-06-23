@@ -11,10 +11,8 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
     db.init_app(app)
 
-    CORS(app) 
+    cors = CORS(app, resources={r"/*": {"origins": "*"}})
     api = Api(app)  # create an API
-
-    print("Database path:", os.path.abspath("db.sqlite"))
 
     # add resources to the API
     api.add_resource(ContentList, '/contents')

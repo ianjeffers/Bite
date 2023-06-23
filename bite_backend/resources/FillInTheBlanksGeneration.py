@@ -22,6 +22,16 @@ class FillInTheBlanksGeneration(Resource):
         parser.add_argument('topic', type=str, required=True, help='Education topic is required')
         data = parser.parse_args()
 
+        #Dummy Data
+        return {
+        'message': 'Fill in the blanks game generated successfully', 
+        'content': {
+            'sentence': 'The Pythagorean Theorem is a fundamental relation in _____ which states that in a right-angled triangle, the square of the length of the hypotenuse (the side opposite the right angle) is equal to the sum of the squares of the lengths of the other two sides.',
+            'answer': 'geometry',
+            'wordBank': ['geometry', 'algebra', 'calculus', 'trigonometry']
+        }
+    }, 201
+
         # Fetch Wikipedia page 
         summary = self.wikipedia_service.get_summary(data['topic'])
         if summary is None:
@@ -29,7 +39,6 @@ class FillInTheBlanksGeneration(Resource):
 
         prompt = 'Given the following summary, please create a sentence with a missing word or phrase in the form of a fill-in-the-blanks game. Also provide a word bank that contains the correct answer (missing word previously selected) and a few decoys. Format: {"sentence": "_____", "answer": "_____", "wordBank": ["_____", "_____", "_____"]}. Only respond with the JSON content. ' + summary
         gpt_response = self.openai_service.generate_json(prompt, 250)
-        print(gpt_response.choices[0].text.strip())
         fill_in_the_blanks = json.loads(gpt_response.choices[0].text.strip())
         # Generate the vector for each sentence
         fill_in_the_blanks_str = str(fill_in_the_blanks)
@@ -39,4 +48,4 @@ class FillInTheBlanksGeneration(Resource):
 
         # fill_in_the_blanks = {key: getattr(content, key) for key in ['id', 'content', 'vector']}
         
-        return {'message': 'Fill in the blanks game generated successfully', 'game': fill_in_the_blanks}, 201
+        return {'message': 'Fill in the blanks game generated successfully', 'content': fill_in_the_blanks}, 201

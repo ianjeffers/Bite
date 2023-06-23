@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { matchingGameStyles as styles } from '../styles';
 
-
-const MatchingGame = ({ matchPairs }) => {
+const MatchingGame = ({ content }) => {
   const [selectedQuestion, setSelectedQuestion] = useState(null);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [correctMatches, setCorrectMatches] = useState([]);
@@ -11,6 +10,8 @@ const MatchingGame = ({ matchPairs }) => {
   const [timeLeft, setTimeLeft] = useState(60);
   const [gameOver, setGameOver] = useState(false);
   
+  const matchPairs = content.Questions; // Update this line to use new content format
+
   const shuffledAnswers = React.useMemo(() => matchPairs.sort(() => Math.random() - 0.5), [matchPairs]);
 
   useEffect(() => {
@@ -27,7 +28,7 @@ const MatchingGame = ({ matchPairs }) => {
   const handleQuestionPress = (question) => {
     if (correctMatches.includes(question)) return;
     setSelectedQuestion(question);
-    if (selectedAnswer && question.answer === selectedAnswer) {
+    if (selectedAnswer && question.Answer === selectedAnswer) {
       setCorrectMatches(prevCorrectMatches => [...prevCorrectMatches, question]);
       setSelectedQuestion(null);
       setSelectedAnswer(null);
@@ -37,7 +38,7 @@ const MatchingGame = ({ matchPairs }) => {
 
   const handleAnswerPress = (answer) => {
     setSelectedAnswer(answer);
-    if (selectedQuestion && selectedQuestion.answer === answer) {
+    if (selectedQuestion && selectedQuestion.Answer === answer) {
       setCorrectMatches(prevCorrectMatches => [...prevCorrectMatches, selectedQuestion]);
       setSelectedQuestion(null);
       setSelectedAnswer(null);
@@ -60,24 +61,24 @@ const MatchingGame = ({ matchPairs }) => {
           <View style={styles.column}>
             {matchPairs.map((pair) => (
               <TouchableOpacity
-                key={pair.question}
+                key={pair.Question}
                 onPress={() => handleQuestionPress(pair)}
                 style={[styles.button, correctMatches.includes(pair) && styles.correct]}
                 disabled={correctMatches.includes(pair)}
               >
-                <Text style={styles.text}>{pair.question}</Text>
+                <Text style={styles.text}>{pair.Question}</Text>
               </TouchableOpacity>
             ))}
           </View>
           <View style={styles.column}>
             {shuffledAnswers.map((pair) => (
                 <TouchableOpacity
-                  key={pair.answer}
-                  onPress={() => handleAnswerPress(pair.answer)}
-                  style={[styles.button, correctMatches.some(match => match.answer === pair.answer) && styles.correct]}
-                  disabled={correctMatches.some(match => match.answer === pair.answer)}
+                  key={pair.Answer}
+                  onPress={() => handleAnswerPress(pair.Answer)}
+                  style={[styles.button, correctMatches.some(match => match.Answer === pair.Answer) && styles.correct]}
+                  disabled={correctMatches.some(match => match.Answer === pair.Answer)}
                 >
-                  <Text style={styles.text}>{pair.answer}</Text>
+                  <Text style={styles.text}>{pair.Answer}</Text>
                 </TouchableOpacity>
               ))}
           </View>

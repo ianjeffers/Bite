@@ -18,6 +18,45 @@ class QuizGeneration(Resource):
         parser.add_argument('topic', type=str, required=True, help='Education topic is required')
         data = parser.parse_args()
 
+
+        mock_data = {
+            "quiz": [
+                {
+                    "question": "What is the theory of relativity?",
+                    "options": [
+                        "A scientific theory proposed by Einstein",
+                        "A theory about relative motion",
+                        "A theory of quantum physics",
+                        "A theory about space-time"
+                    ],
+                    "correctOption": "A scientific theory proposed by Einstein"
+                },
+                {
+                    "question": "Who proposed the theory of relativity?",
+                    "options": [
+                        "Newton",
+                        "Einstein",
+                        "Maxwell",
+                        "Bohr"
+                    ],
+                    "correctOption": "Einstein"
+                },
+                {
+                    "question": "What field of science does the theory of relativity belong to?",
+                    "options": [
+                        "Biology",
+                        "Chemistry",
+                        "Physics",
+                        "Mathematics"
+                    ],
+                    "correctOption": "Physics"
+                }
+            ]
+        }
+
+        return {'message': 'Quiz generated successfully', 'content': mock_data["quiz"]}, 201
+
+
         # Fetch Wikipedia page 
         page = self.wikipedia_service.get_page(data['topic'])
         if page is None:
@@ -31,4 +70,4 @@ class QuizGeneration(Resource):
         # TODO: Add code here to store quiz in database if necessary
 
 
-        return {'message': 'Quiz generated successfully', 'quiz': quiz_json["quiz"]}, 201
+        return {'message': 'Quiz generated successfully', 'content': quiz_json["quiz"]}, 201

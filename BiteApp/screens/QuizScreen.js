@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import axios from 'axios';
 import { Card } from 'react-native-elements';
 import { quizScreenStyles as styles } from '../styles';
+import ApiService from '../services/ApiService'; 
 
 const QuizScreen = () => {
   const [quiz, setQuiz] = useState(null);
@@ -14,7 +15,7 @@ const QuizScreen = () => {
   useEffect(() => {
     const fetchQuiz = async () => {
       try {
-        const response = await axios.post('http://localhost:5000/quiz', {
+        const response = await ApiService.post('/quiz', {
           topic: 'Minecraft' // TODO -> Generate from user context/feed
         });
         setQuiz(response.data.quiz);
