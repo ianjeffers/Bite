@@ -16,7 +16,7 @@ const contentEndpoints = {
   quiz: '/quiz'
 };
 
-const contentScreenComponents = {
+export const contentScreenComponents = {
   video: VideoContentScreen,
   trueorfalse: TrueOrFalseScreen,
   blanks: FillInTheBlanksScreen,
@@ -55,9 +55,7 @@ class ContentService {
         `${contentEndpoints[contentType]}`,
         { topic }
       );
-      console.log("FOUND RESPONSE", response)
       if ([200, 201].includes(response.status)) {
-        console.log("RETURNING", response.data.content, "WITH TYPE", contentType)
         return response.data.content
       } else {
         console.error('Unexpected response status')
@@ -69,9 +67,7 @@ class ContentService {
   }
 
   async bufferContent(userContext, topic) {
-    const allContentTypes = Object.keys(contentEndpoints);
-    const contentType = allContentTypes[this.contentTypeIndex];
-    console.log('Fetching content type:', contentType); 
+    const contentType = this.decideContentType(userContext);
     const fetchedContent = await this.fetchContent(contentType, topic);
     console.log('Fetched content:', fetchedContent); 
   
@@ -81,43 +77,28 @@ class ContentService {
         type:contentType
       });
     };
-    
-    this.contentTypeIndex = (this.contentTypeIndex + 1) % allContentTypes.length;
   }
+
   
 
-  // async fetchNextContent() {
-  //   this.fetching = true;
-
-  //   while (this.fetchQueue.length > 0) {
-  //     const { contentType, topic } = this.fetchQueue.shift();
-
-  //     const fetchedContent = await this.fetchContent(contentType, topic);
-
-  //     if (fetchedContent.length) {
-  //       this.contentQueue.push(...fetchedContent);
-  //     }
-  //   }
-
-  //   this.fetching = false;
-  // }
-
   async getContent(userContext, topic) {
-    console.log('Content Queue Length:', this.contentQueue.length); 
-    if (this.contentQueue.length === 0) {
+    if (this.contentQueue.length <= 2) {
       await this.bufferContent(userContext, topic);
     }
   
     if (this.contentQueue.length > 0) {
-      const content = this.contentQueue.shift();
-      console.log('Returning content:', content); 
+      const content = this.contentQueue.shift();  
       return content;
     } else {
-      // No content available yet
-      console.log('No content available yet'); 
-      return;
+      console.log('No content available yet');
+      return null;
     }
   }
+
+  removeContent(count) {
+    this.contentQueue.splice(0, count);
+  }
+  
 }
 
 export default new ContentService();

@@ -18,11 +18,9 @@ const HomeScreen = () => {
       if (loading) { 
         return;
       }
-      setLoading(true); 
       try {
         let contentObject = await ContentService.getContent(userContext, initialTopic);
         setContents(prevContents => [...prevContents, contentObject]);
-        // You can add logic to load more contents here
       } catch (error) {
         console.error(error);
       } finally {
@@ -31,7 +29,11 @@ const HomeScreen = () => {
     };
 
     fetchContents();
-  }, [userContext, loading]);
+    const intervalId = setInterval(fetchContents, 4000); 
+
+    return () => clearInterval(intervalId);
+
+  }, [userContext]);
 
   const handleLike = async (content) => {
     setUserContext({ type: 'ADD_PREFERRED_TOPIC', payload: content.topic });
