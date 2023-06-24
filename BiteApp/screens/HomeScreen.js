@@ -4,38 +4,25 @@ import { homeScreenStyles as styles } from '../styles';
 import UserContext from '../contexts/UserContext';
 
 import ContentService from '../services/ContentService';
-import FillInTheBlanksScreen from '../screens/FillInTheBlanksScreen';
-import FlashcardScreen from '../screens/FlashcardScreen';
-import MatchingGameScreen from '../screens/MatchingGameScreen';
-import QuizScreen from '../screens/QuizScreen';
-import TrueOrFalseScreen from '../screens/TrueOrFalseScreen';
-import VideoContentScreen from '../screens/VideoContentScreen';
+import SwiperComponent from '../components/SwiperComponent';
 
 const HomeScreen = () => {
   const { userContext, setUserContext } = useContext(UserContext);
-  const [currentContent, setCurrentContent] = useState(null);
+  const [contents, setContents] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const screenMap = {
-    'blanks': FillInTheBlanksScreen,
-    'flashcard': FlashcardScreen,
-    'matching': MatchingGameScreen,
-    'quiz': QuizScreen,
-    'trueorfalse': TrueOrFalseScreen,
-    'video': VideoContentScreen,
-  };
   let initialTopic = "math"
 
   useEffect(() => {
-    const fetchInitialContent = async () => {
+    const fetchContents = async () => {
       if (loading) { 
         return;
       }
       setLoading(true); 
       try {
         let contentObject = await ContentService.getContent(userContext, initialTopic);
-        console.log("Found content", contentObject)
-        setCurrentContent(contentObject);
+        setContents(prevContents => [...prevContents, contentObject]);
+        // You can add logic to load more contents here
       } catch (error) {
         console.error(error);
       } finally {
@@ -43,29 +30,14 @@ const HomeScreen = () => {
       }
     };
 
-    fetchInitialContent();
+    fetchContents();
   }, [userContext, loading]);
 
   const handleLike = async (content) => {
     setUserContext({ type: 'ADD_PREFERRED_TOPIC', payload: content.topic });
   };
 
-  const isEmptyContent = (content) => {
-    if (typeof content === 'string') {
-      return content === '';
-    }
-    if (Array.isArray(content)) {
-      return content.length === 0;
-    }
-    if (typeof content === 'object' && content !== null) {
-      return Object.keys(content).length === 0;
-    }
-    return false;
-  }
-
-  let ContentComponent = currentContent ? screenMap[currentContent.type] : null;
-
-  if (!ContentComponent || !currentContent || isEmptyContent(currentContent.content)) {
+  if (contents.length === 0) {
     return (
       <View style={styles.container}>
         <View style={styles.phoneScreen}>
@@ -78,10 +50,13 @@ const HomeScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.phoneScreen}>
-        <ContentComponent content={currentContent.content} onLike={handleLike} />
+        <SwiperComponent 
+          contents={contents} 
+          onLike={handleLike} 
+        />
       </View>
     </View>
   );
-};
+}
 
 export default HomeScreen;
