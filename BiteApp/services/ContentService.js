@@ -54,7 +54,7 @@ class ContentService {
   async fetchContent(contentType, topic, similar = true) {
     let fetchedContent = null;
     let fetchedContentType = null; // Declare a new variable to store the content type
-    // similar = false
+    similar = false
     if (similar) {
       const response = await SimilarContentService.fetchContent(topic);
       console.log("Similar Content Service Response", response)

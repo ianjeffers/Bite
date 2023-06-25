@@ -9,6 +9,7 @@ const initialState = {
   skills: {},
   history: [],
   PostsViewed: 0,
+  likedContents: [],
 };
 
 const reducer = (state, action) => {
@@ -22,9 +23,20 @@ const reducer = (state, action) => {
       case 'ADD_PREFERRED_TOPIC':
         return { ...state, preferences: [...state.preferences, action.payload] };
       case 'LOAD_STATE':
-        return action.payload;
+        return { ...state, ...action.payload };
       case 'INCREMENT_POSTS_VIEWED':
         return { ...state, PostsViewed: state.PostsViewed + 1 };
+      case 'TOGGLE_CONTENT_LIKE':
+        const updatedLikes = [...state.likedContents];
+        const contentIndex = updatedLikes.findIndex(content => content.id === action.payload.id);
+        
+        if (contentIndex !== -1) {
+          updatedLikes.splice(contentIndex, 1);
+        } else {
+          updatedLikes.push(action.payload);
+        }
+
+        return { ...state, likedContents: updatedLikes };
       default:
         return state;
     }

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { View, ActivityIndicator, Text, Button } from 'react-native';
 import { trueOrFalseScreenStyles as styles } from '../styles';
+import LikeButton from '../components/LikeButton';
 
-const TrueOrFalseScreen = ({ content }) => {
+const TrueOrFalseScreen = ({ content, onLike, isContentLiked, validContents, index: currentIndex }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
@@ -27,13 +28,16 @@ const TrueOrFalseScreen = ({ content }) => {
 
   if (gameOver) {
     return (
-      <View style={styles.wrapper}>
-        <Text style={styles.finalScoreText}>Game over! Your final score: {score}/{questions.length}</Text>
-        <Button title="Play again" onPress={() => {
-          setScore(0);
-          setCurrentQuestionIndex(0);
-          setGameOver(false);
-        }} />
+      <View>      
+        <LikeButton onLike={() => onLike(validContents[currentIndex])} isLiked={isContentLiked(validContents[currentIndex])} />
+        <View style={styles.wrapper}>
+          <Text style={styles.finalScoreText}>Game over! Your final score: {score}/{questions.length}</Text>
+          <Button title="Play again" onPress={() => {
+            setScore(0);
+            setCurrentQuestionIndex(0);
+            setGameOver(false);
+          }} />
+        </View>
       </View>
     );
   }

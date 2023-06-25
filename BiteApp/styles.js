@@ -1,11 +1,38 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
+export const likeButtonStyles = StyleSheet.create({
+  container: {
+    position: 'absolute',
+    right: 15,
+    top: '65%',
+    padding: 10,
+    borderRadius: 50,
+    backgroundColor: 'white',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  icon: {
+    fontSize: 30,
+    color: "#444444",
+  },
+  liked: {
+    color: "#FF0000",
+  },
+});
+
+
 export const fillInTheBlanksScreenStyles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1, 
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,  
+    padding: 20,
     backgroundColor: '#e0e0e0'
   },
   sentence: {
@@ -36,6 +63,7 @@ export const fillInTheBlanksScreenStyles = StyleSheet.create({
 
 export const flashcardScreenStyles = StyleSheet.create({
     wrapper: {
+      flex: 1,  
       justifyContent: 'center',
     },
     slide: {
@@ -48,8 +76,8 @@ export const flashcardScreenStyles = StyleSheet.create({
 
 export const flashcardStyles = StyleSheet.create({
   card: {
-    width: '80%', // fill 80% of the screen width
-    height: '80%', // fill 80% of the screen height
+    width: '80%', 
+    height: '80%', 
     backgroundColor: '#f8f8f8',
     borderRadius: 10,
     alignItems: 'center',
@@ -85,6 +113,11 @@ export const homeScreenStyles = StyleSheet.create({
       width: '100%',
       maxWidth: 425, // The typical width of a phone screen
       backgroundColor: '#FFF',
+    },
+    likeButtonContainer: {
+      position: 'absolute',
+      right: 15,
+      bottom: 15,
     },
   });
   

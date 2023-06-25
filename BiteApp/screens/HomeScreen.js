@@ -35,9 +35,6 @@ const HomeScreen = () => {
     return () => clearInterval(intervalId);
   }, []);
 
-  const handleLike = async (content) => {
-    setUserContext({ type: 'ADD_PREFERRED_TOPIC', payload: content.topic });
-  };
 
   if (contents.length === 0) {
     return (
@@ -54,7 +51,6 @@ const HomeScreen = () => {
       <View style={styles.phoneScreen}>
         <SwiperComponent 
           contents={contents} 
-          onLike={handleLike} 
         />
       </View>
     </View>

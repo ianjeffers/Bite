@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { ActivityIndicator } from 'react-native';
+import React, { useState, useEffect, useContext } from 'react';
+import { ActivityIndicator, View } from 'react-native';
 import Swiper from 'react-native-swiper/src';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { likeButtonStyles } from '../styles';
+import UserContext from '../contexts/UserContext';
 
 import FillInTheBlanksScreen from '../screens/FillInTheBlanksScreen';
 import FlashcardScreen from '../screens/FlashcardScreen';
@@ -8,6 +11,7 @@ import MatchingGameScreen from '../screens/MatchingGameScreen';
 import QuizScreen from '../screens/QuizScreen';
 import TrueOrFalseScreen from '../screens/TrueOrFalseScreen';
 import VideoContentScreen from '../screens/VideoContentScreen';
+import LikeButton from './LikeButton';
 
 const screenMap = {
   'blanks': FillInTheBlanksScreen,
@@ -18,14 +22,25 @@ const screenMap = {
   'video': VideoContentScreen,
 };
 
-const SwiperComponent = ({ contents, onLike }) => {
+
+const SwiperComponent = ({ contents }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isLiked, setIsLiked] = useState(false);
+  const { userContext, setUserContext } = useContext(UserContext);
+
+  const isContentLiked = (content) => {
+    return userContext.likedContents?.some(likedContent => likedContent.id === content.id);
+  };
+
+  const onLike = async (content) => {
+    console.log("Liked", content)
+    setUserContext({ type: 'ADD_PREFERRED_TOPIC', payload: content.topic });
+    setUserContext({ type: 'TOGGLE_CONTENT_LIKE', payload: content });
+  };
 
   useEffect(() => {
-    if(currentIndex === contents.length - 1) {
-      // You can load the next content here
-    }
-  }, [currentIndex, contents.length]);
+    setIsLiked(false);
+  }, [currentIndex]);
 
   const isEmptyContent = (content) => {
     if (typeof content === 'string') {
@@ -43,39 +58,44 @@ const SwiperComponent = ({ contents, onLike }) => {
   const validContents = Array.isArray(contents) ? contents.filter(content => content !== null) : [];
 
   return (
-    <Swiper
-      showsPagination={false}
-      loop={false}
-      showsButtons={false}
-      horizontal={false}
-      onIndexChanged={(index) => {
-        setCurrentIndex(index);
-      }}
-    >
-      {validContents.map((content, index) => {
-        if (isEmptyContent(content)) {
-          return (
-                <ActivityIndicator key={index}/>
-          );
-        }
-        
-        const ScreenComponent = screenMap[content.type];
-        if (!ScreenComponent) {
-          console.warn(`No screen registered for type ${content.type}`);
-          return (
-            <ActivityIndicator key={index}/>
-          );
-        }
+    <View style={{ flex: 1 }}>
+      <Swiper
+        showsPagination={false}
+        loop={false}
+        showsButtons={false}
+        horizontal={false}
+        onIndexChanged={(index) => {
+          setCurrentIndex(index);
+        }}
+      >
+        {validContents.map((content, index) => {
+          if (isEmptyContent(content)) {
+            return (
+                  <ActivityIndicator key={index}/>
+            );
+          }
+          
+          const ScreenComponent = screenMap[content.type];
+          if (!ScreenComponent) {
+            console.warn(`No screen registered for type ${content.type}`);
+            return (
+              <ActivityIndicator key={index}/>
+            );
+          }
 
-        return (
-          <ScreenComponent 
-            content={content} 
-            onLike={onLike} 
-            key={index} 
-          />
-        );
-      })}
-    </Swiper>
+          return (
+            <ScreenComponent 
+              content={content} 
+              onLike={onLike}
+              isContentLiked={isContentLiked}
+              validContents={validContents}
+              index={index}
+              key={index} 
+            />
+          );
+        })}
+      </Swiper>
+    </View>
   );
 }
 

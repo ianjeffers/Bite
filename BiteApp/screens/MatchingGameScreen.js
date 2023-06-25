@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import MatchingGame from '../components/MatchingGame';
+import LikeButton from '../components/LikeButton';
 
-const MatchingGameScreen = ({ content }) => {
+const MatchingGameScreen = ({ content, onLike, isContentLiked, validContents, index: currentIndex }) => {
   if (!content) {
     return <ActivityIndicator size="large" color="#0000ff" />;
   }
@@ -16,6 +17,7 @@ const MatchingGameScreen = ({ content }) => {
   return (
     <View>
       <MatchingGame content={gameData} />
+      <LikeButton onLike={() => onLike(validContents[currentIndex])} isLiked={isContentLiked(validContents[currentIndex])} />
     </View>
   );
 };
