@@ -47,9 +47,10 @@ class TrueOrFalseGeneration(Resource):
             vector = self.hugging_face_service.generate_vector(content_string)
 
             # Save the set of questions and their vector in the database
-            content_db = self.db_service.save_content(questions_json, vector)
+            content_db = self.db_service.save_content(questions_json, "trueorfalse")
             self.pinecone_service.upsert(content_db.id, vector)
         except Exception as e:
+            print("TRUE/FALSE", e)
             return {'message': 'Error in generating True or False content', 'error': str(e)}, 500
 
         return {'message': 'True or False questions generated successfully', 'content': questions_json["questions"]}, 201

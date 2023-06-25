@@ -44,9 +44,10 @@ class FlashcardGeneration(Resource):
         try:
             content_string = ' '.join([f'Question: {flashcard.get("Question")} Answer: {flashcard.get("Answer")}' for flashcard in flashcards_json["content"]])
             vector = self.hugging_face_service.generate_vector(content_string)
-            flashcards_db = self.db_service.save_content(str(flashcards_json["content"]), vector)
+            flashcards_db = self.db_service.save_content(str(flashcards_json["content"]), "flashcard")
             self.pinecone_service.upsert(flashcards_db.id, vector)
         except Exception as e:
+            print("FLASHCARD", e)
             return {'message': 'Error in generating Flashcard content', 'error': str(e)}, 500
 
         return {'message': 'Flashcards generated successfully', 'content': flashcards_json["content"]}, 201

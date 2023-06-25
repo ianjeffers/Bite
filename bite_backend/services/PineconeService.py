@@ -28,29 +28,24 @@ class PineconeService:
         self.lock = threading.Lock()
 
     def upsert(self, content_id, content):
-        return
         if content_id is None or content is None:
             raise ValueError("Both content ID and content must be provided.")
         with self.lock:
             try:
-                print("CONTENT ID", str(content_id))
                 self.pinecone_client.upsert(vectors=[
                     {"id":str(content_id), "values":content}
                 ])
             except Exception as e:
+                print("Pinecone Service Upsert")
                 raise Exception(f"Error executing Pinecone upsert operation: {str(e)}")
 
     def query(self, query, top_k):
         if query is None or top_k is None:
             raise ValueError("Both query and top_k must be provided.")
         try:
-            print(type(query), query[:10])
             results = self.pinecone_client.query(vector=query, top_k=2)
-            print(results['matches'])
-
-            # Convert each ScoredVector object to a dictionary
-            matches = [{'id': match.id, 'score': match.score} for match in results['matches']]
-
-            return matches
+           
+            return results['matches']
         except Exception as e:
+            print("Pinecone Service Query")
             raise Exception(f"Error executing Pinecone query operation: {str(e)}")

@@ -13,27 +13,27 @@ const HomeScreen = () => {
 
   let initialTopic = "math"
 
-  useEffect(() => {
-    const fetchContents = async () => {
-      if (loading) { 
-        return;
-      }
-      try {
-        let contentObject = await ContentService.getContent(userContext, initialTopic);
-        setContents(prevContents => [...prevContents, contentObject]);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false); 
-      }
-    };
+  const fetchContents = async () => {
+    if (loading) { 
+      return;
+    }
+    try {
+      setLoading(true);
+      let contentObject = await ContentService.getContent(userContext, initialTopic);
+      setContents(prevContents => [...prevContents, contentObject]);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false); 
+    }
+  };
 
+  useEffect(() => {
     fetchContents();
-    const intervalId = setInterval(fetchContents, 4000); 
+    const intervalId = setInterval(fetchContents, 10000); 
 
     return () => clearInterval(intervalId);
-
-  }, [userContext]);
+  }, []);
 
   const handleLike = async (content) => {
     setUserContext({ type: 'ADD_PREFERRED_TOPIC', payload: content.topic });

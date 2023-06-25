@@ -38,9 +38,10 @@ class MatchingGeneration(Resource):
         try:
             content_string = ' '.join([q['Question'] + ' ' + q['Answer'] for q in match_pairs_json['Questions']])
             vector = self.hugging_face_service.generate_vector(content_string)
-            matching = self.db_service.save_content(str(match_pairs_json), vector)
+            matching = self.db_service.save_content(str(match_pairs_json), 'matching')
             self.pinecone_service.upsert(matching.id, vector)
         except Exception as e:
+            print("MATCHING", e)
             return {'message': 'Error in generating Matching content', 'error': str(e)}, 500
 
         return {'message': 'Matching pairs generated successfully', 'content': match_pairs_json}, 201

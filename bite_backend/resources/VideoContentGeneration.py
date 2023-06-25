@@ -49,9 +49,10 @@ class VideoContentGeneration(Resource):
         content_string = content['Tweet']
         try:
             vector = self.hugging_face_service.generate_vector(content_string)
-            content_db = self.db_service.save_content(content, vector)
+            content_db = self.db_service.save_content(content, 'video')
             self.pinecone_service.upsert(content_db.id, vector)
         except Exception as e:
+            print("VIDEO", e)
             return {'message': 'Error in generating video content', 'error': str(e)}, 500
 
         return {'message': 'Video content generated successfully', 'content': content}, 201

@@ -6,14 +6,16 @@ import MatchingGameScreen from '../screens/MatchingGameScreen';
 import FlashcardScreen from '../screens/FlashcardScreen';
 import QuizScreen from '../screens/QuizScreen';
 import ApiService from './ApiService';
+import NewContentService from './NewContentService';
+import SimilarContentService from './SimilarContentService';
 
-const contentEndpoints = {
-  // video: '/video',
-  // trueorfalse: '/trueorfalse',
+export const contentEndpoints = {
+  video: '/video',
+  trueorfalse: '/trueorfalse',
   blanks: '/blanks',
-  // matching: '/matching',
-  // flashcard: '/flashcard',
-  // quiz: '/quiz'
+  matching: '/matching',
+  flashcard: '/flashcard',
+  quiz: '/quiz'
 };
 
 export const contentScreenComponents = {
@@ -49,41 +51,46 @@ class ContentService {
     return allContentTypes[Math.floor(Math.random() * allContentTypes.length)];
   }
 
-  async fetchContent(contentType, topic) {
-    try {
-      const response = await ApiService.post( 
-        `${contentEndpoints[contentType]}`,
-        { topic }
-      );
-      if ([200, 201].includes(response.status)) {
-        return response.data.content
-      } else {
-        console.error('Unexpected response status')
+  async fetchContent(contentType, topic, similar = true) {
+    let fetchedContent = null;
+    let fetchedContentType = null; // Declare a new variable to store the content type
+    // similar = false
+    if (similar) {
+      const response = await SimilarContentService.fetchContent(topic);
+      console.log("Similar Content Service Response", response)
+      if (response && response.length > 0) {
+        fetchedContent = response[0].content;
+        fetchedContentType = response[0].type;
       }
-    } catch (error) {
-      console.error('Failed to fetch content:', error);
-      return;
     }
+    if (!fetchedContent) {
+      console.log("FETCHING CONTENT ", contentType)
+      fetchedContent = await NewContentService.fetchContent(contentType, topic);
+      fetchedContentType = contentType; // Use the provided contentType if no similar content found
+    }
+    return [fetchedContentType, fetchedContent]; // Return content and type
   }
+  
 
   async bufferContent(userContext, topic) {
-    const contentType = this.decideContentType(userContext);
-    const fetchedContent = await this.fetchContent(contentType, topic);
+    let type = this.decideContentType(userContext);
+    let similar = Math.random() < 0.4;
+    const [contentType, fetchedContent]  = await this.fetchContent(type, topic, similar);
     console.log('Fetched content:', fetchedContent); 
+    console.log("Fetched Content Type", contentType)
   
     if (fetchedContent) {
       this.contentQueue.push({
         content:fetchedContent,
         type:contentType
       });
-    };
+    }
   }
-
-  
 
   async getContent(userContext, topic) {
     if (this.contentQueue.length <= 2) {
       await this.bufferContent(userContext, topic);
+      await new Promise(resolve => setTimeout(resolve, 3000)); //TODO -> Figure out how we can remove this.
     }
   
     if (this.contentQueue.length > 0) {
