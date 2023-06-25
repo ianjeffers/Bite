@@ -14,24 +14,26 @@ const MindMapScreen = () => {
   const { userContext, setUserContext } = useContext(UserContext);
 
   const handleEnterTopic = async () => {
-    if (topic) {
+    if (topic && !displayedTopics.includes(topic)) {
       setDisplayedTopics([...displayedTopics, topic]);
       setTopic('');
     }
   };
 
   const handleTopicSelect = async (selectedTopic) => {
-    if (!selectedTopics.has(selectedTopic)) {
+    if (!selectedTopics.has(selectedTopic) && selectedTopics.size < 30) {
       setIsLoading(true);
       const newSelectedTopics = new Set(selectedTopics);
       newSelectedTopics.add(selectedTopic);
       setSelectedTopics(newSelectedTopics);
       setUserContext({ type: 'ADD_PREFERRED_TOPIC', payload: Array.from(newSelectedTopics) });
       const relatedTopics = await TopicService.generateRelatedTopics(selectedTopic, 'interest');
-      setDisplayedTopics([...displayedTopics, ...relatedTopics]);
+      const newTopics = relatedTopics.filter((topic) => !displayedTopics.includes(topic));
+      setDisplayedTopics([...displayedTopics, ...newTopics]);
       setIsLoading(false);
     }
   };
+
 
   return (
     <View style={styles.container}>

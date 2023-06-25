@@ -1,57 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { ActivityIndicator, View } from 'react-native';
-import { homeScreenStyles as styles } from '../styles';
-import UserContext from '../contexts/UserContext';
+// screens/HomeScreen.js
 
-import ContentService from '../services/ContentService';
-import SwiperComponent from '../components/SwiperComponent';
+import React from 'react';
+import { View } from 'react-native';
+import BottomNavBar from '../components/BottomNavBar';
+import { homeScreenStyles as styles } from '../styles';
 
 const HomeScreen = () => {
-  const { userContext, setUserContext } = useContext(UserContext);
-  const [contents, setContents] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  let initialTopic = "math"
-
-  const fetchContents = async () => {
-    if (loading) { 
-      return;
-    }
-    try {
-      setLoading(true);
-      let contentObject = await ContentService.getContent(userContext, initialTopic);
-      setContents(prevContents => [...prevContents, contentObject]);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false); 
-    }
-  };
-
-  useEffect(() => {
-    fetchContents();
-    const intervalId = setInterval(fetchContents, 10000); 
-
-    return () => clearInterval(intervalId);
-  }, []);
-
-
-  if (contents.length === 0) {
-    return (
-      <View style={styles.container}>
-        <View style={styles.phoneScreen}>
-            <ActivityIndicator/>
-        </View>
-      </View>
-    );
-  }
-
   return (
     <View style={styles.container}>
       <View style={styles.phoneScreen}>
-        <SwiperComponent 
-          contents={contents} 
-        />
+        <BottomNavBar/>
       </View>
     </View>
   );

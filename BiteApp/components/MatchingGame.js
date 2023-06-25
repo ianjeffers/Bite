@@ -1,21 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Animated } from 'react-native';
 import { matchingGameStyles as styles } from '../styles';
 
-const MatchingGame = ( { content: gameData } ) => {
+const shuffleArray = (array) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+const MatchingGame = ({ content: gameData }) => {
   const [selectedQuestion, setSelectedQuestion] = useState(null);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [correctMatches, setCorrectMatches] = useState([]);
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(60);
   const [gameOver, setGameOver] = useState(false);
-  
-  const matchPairs = gameData; // gameData itself is the array of question-answer pairs
 
-  const shuffledAnswers = React.useMemo(() => matchPairs.sort(() => Math.random() - 0.5), [matchPairs]);
+  const [matchPairs, setMatchPairs] = useState([]);
+  const [shuffledAnswers, setShuffledAnswers] = useState([]);
 
   useEffect(() => {
-    if (!timeLeft || score === matchPairs.length) {
+    setMatchPairs(shuffleArray(gameData));
+    setShuffledAnswers(shuffleArray([...gameData]));
+  }, []);
+
+  useEffect(() => {
+    if (!timeLeft || (score === matchPairs.length && score != 0)) {
       setGameOver(true);
       return;
     }
@@ -23,7 +35,7 @@ const MatchingGame = ( { content: gameData } ) => {
       setTimeLeft(timeLeft - 1);
     }, 1000);
     return () => clearInterval(timerId);
-  }, [timeLeft, score, matchPairs.length]);
+  }, [timeLeft, correctMatches.length, matchPairs.length]);
 
   const handleQuestionPress = (question) => {
     if (correctMatches.includes(question)) return;

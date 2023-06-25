@@ -27,9 +27,9 @@ const FillInTheBlanksScreen = ({ content, onLike, isContentLiked, validContents,
   }
 
   return (
-    <View>
+    <View style={styles.container}>
       <LikeButton onLike={() => onLike(validContents[currentIndex])} isLiked={isContentLiked(validContents[currentIndex])} />
-      <View style={styles.container}>
+      <View style={styles.contentContainer}>
         <Text style={styles.sentence}>{content.sentence.replace('_____', '________')}</Text>
         <View style={styles.wordBank}>
           {content.wordBank.map((word, index) => (
@@ -58,7 +58,6 @@ const FillInTheBlanksScreen = ({ content, onLike, isContentLiked, validContents,
             {isCorrect ? 'Correct!' : 'Incorrect, please try again.'}
           </Text>
         )}
-        {/* <LikeButton onLike={onLike} />   */}
       </View>
     </View>
   );

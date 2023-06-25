@@ -7,7 +7,8 @@ const TrueOrFalseScreen = ({ content, onLike, isContentLiked, validContents, ind
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
-  console.log("HERES THE CONTENT:", content)
+  const [answerStatus, setAnswerStatus] = useState(null);
+
   const questions = content.content;
 
   if (!questions || questions.length === 0 || !questions[currentQuestionIndex]) {
@@ -17,13 +18,19 @@ const TrueOrFalseScreen = ({ content, onLike, isContentLiked, validContents, ind
   const handleAnswer = (answer) => {
     if (answer === questions[currentQuestionIndex].is_true) {
       setScore(score + 1);
+      setAnswerStatus('correct');
+    } else {
+      setAnswerStatus('wrong');
     }
 
-    if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-    } else {
-      setGameOver(true);
-    }
+    setTimeout(() => {
+      setAnswerStatus(null);  // reset the status after 1 second
+      if (currentQuestionIndex < questions.length - 1) {
+        setCurrentQuestionIndex(currentQuestionIndex + 1);
+      } else {
+        setGameOver(true);
+      }
+    }, 1000);
   };
 
   if (gameOver) {
@@ -44,7 +51,7 @@ const TrueOrFalseScreen = ({ content, onLike, isContentLiked, validContents, ind
 
   return (
     <View style={styles.wrapper}>
-      <Text style={styles.questionText}>{questions[currentQuestionIndex].statement}</Text>
+      <Text style={[styles.questionText, answerStatus === 'correct' ? styles.correctAnswer : (answerStatus === 'wrong' ? styles.wrongAnswer : {})]}>{questions[currentQuestionIndex].statement}</Text>
       <Button title="True" onPress={() => handleAnswer(true)} />
       <Button title="False" onPress={() => handleAnswer(false)} />
       <Text style={styles.scoreText}>Score: {score}/{questions.length}</Text>

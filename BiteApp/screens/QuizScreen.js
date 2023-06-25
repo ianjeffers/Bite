@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import Quiz from '../components/Quiz';
+import LikeButton from '../components/LikeButton';
+import { homeScreenStyles as styles } from '../styles';
 
 const QuizScreen = ({ content, onLike, isContentLiked, validContents, index: currentIndex }) => {
   if (!content) {
@@ -8,7 +10,7 @@ const QuizScreen = ({ content, onLike, isContentLiked, validContents, index: cur
   }
 
   return (
-    <View>
+    <View style={styles.container}>
       <LikeButton onLike={() => onLike(validContents[currentIndex])} isLiked={isContentLiked(validContents[currentIndex])} />
       <Quiz content={content} />
     </View>

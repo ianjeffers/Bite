@@ -1,10 +1,23 @@
-import React, { useState } from 'react';
-import { View, Text, Button } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, Button, TouchableOpacity, Animated } from 'react-native';
+import { quizStyles as styles } from '../styles';
 
 const Quiz = ({ content }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [showScore, setShowScore] = useState(false);
+  const fadeAnim = new Animated.Value(0);  // Initial value for opacity: 0
+
+  useEffect(() => {
+    Animated.timing(
+      fadeAnim,
+      {
+        toValue: 1,
+        duration: 2000,
+        useNativeDriver: true
+      }
+    ).start();
+  }, []); // Empty dependency array ensures this effect only runs once, after initial render
 
   const checkAnswer = (isCorrect) => {
     if (isCorrect) {
@@ -25,25 +38,25 @@ const Quiz = ({ content }) => {
   };
   
   return (
-    <View>
+    <Animated.View style={[styles.wrapper, {opacity: fadeAnim}]}>
       {showScore ? (
         <View>
-          <Text>Your score is: {score}/{content.content.length}</Text>
-          <Button title="Restart Quiz" onPress={restartQuiz} />
+          <Text style={styles.scoreText}>Wow! You scored {score}/{content.content.length}</Text>
+          <TouchableOpacity style={styles.button} onPress={restartQuiz}>
+            <Text style={styles.buttonText}>Restart Quiz</Text>
+          </TouchableOpacity>
         </View>
       ) : (
         <View>
-          <Text>{content.content[currentQuestion].question}</Text>
+          <Text style={styles.questionText}>{content.content[currentQuestion].question}</Text>
           {content.content[currentQuestion].options.map((option, index) => (
-            <Button
-              key={index}
-              title={option}
-              onPress={() => checkAnswer(option === content.content[currentQuestion].correctOption)}
-            />
+            <TouchableOpacity key={index} style={styles.option} onPress={() => checkAnswer(option === content.content[currentQuestion].correctOption)}>
+              <Text style={styles.optionText}>{option}</Text>
+            </TouchableOpacity>
           ))}
         </View>
       )}
-    </View>
+    </Animated.View>
   );
 };
 

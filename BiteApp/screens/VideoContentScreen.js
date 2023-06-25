@@ -22,21 +22,22 @@ const VideoContentScreen = ({ content, onLike, isContentLiked, validContents, in
   }
 
   return (
-    <View>
-        <LikeButton onLike={() => onLike(validContents[currentIndex])} isLiked={isContentLiked(validContents[currentIndex])} />
+    <View style={styles.container}>
+      <LikeButton onLike={() => onLike(validContents[currentIndex])} isLiked={isContentLiked(validContents[currentIndex])} />
+
         <View style={styles.wrapper}>
+          
           <ReactPlayer 
             url={videoSource}
             playing
-            loop
             width='100%'
             height='100%'
             muted={true}
           />
-          <View style={styles.contentBox}>
+        </View>
+        <View style={styles.contentBox}>
             <Text style={styles.content}>{content.content.Tweet}</Text>
           </View>
-        </View>
     </View>
   );
 };
