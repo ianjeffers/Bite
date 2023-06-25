@@ -40,6 +40,8 @@ const SwiperComponent = ({ contents, onLike }) => {
     return false;
   }
 
+  const validContents = Array.isArray(contents) ? contents.filter(content => content !== null) : [];
+
   return (
     <Swiper
       showsPagination={false}
@@ -50,7 +52,7 @@ const SwiperComponent = ({ contents, onLike }) => {
         setCurrentIndex(index);
       }}
     >
-      {contents.map((content, index) => {
+      {validContents.map((content, index) => {
         if (isEmptyContent(content)) {
           return (
                 <ActivityIndicator key={index}/>
@@ -60,7 +62,9 @@ const SwiperComponent = ({ contents, onLike }) => {
         const ScreenComponent = screenMap[content.type];
         if (!ScreenComponent) {
           console.warn(`No screen registered for type ${content.type}`);
-          return null;
+          return (
+            <ActivityIndicator key={index}/>
+          );
         }
 
         return (

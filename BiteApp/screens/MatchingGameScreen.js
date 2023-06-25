@@ -7,9 +7,15 @@ const MatchingGameScreen = ({ content }) => {
     return <ActivityIndicator size="large" color="#0000ff" />;
   }
 
+  // Access the Questions array for mapping
+  const gameData = content.content.Questions.map(item => ({
+    Question: item.Question,
+    Answer: item.Answer
+  }));
+
   return (
     <View>
-      <MatchingGame content={content} />
+      <MatchingGame content={gameData} />
     </View>
   );
 };

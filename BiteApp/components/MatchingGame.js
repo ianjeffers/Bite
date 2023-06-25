@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { matchingGameStyles as styles } from '../styles';
 
-const MatchingGame = ({ content }) => {
+const MatchingGame = ( { content: gameData } ) => {
   const [selectedQuestion, setSelectedQuestion] = useState(null);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [correctMatches, setCorrectMatches] = useState([]);
@@ -10,7 +10,7 @@ const MatchingGame = ({ content }) => {
   const [timeLeft, setTimeLeft] = useState(60);
   const [gameOver, setGameOver] = useState(false);
   
-  const matchPairs = content.Questions; // Update this line to use new content format
+  const matchPairs = gameData; // gameData itself is the array of question-answer pairs
 
   const shuffledAnswers = React.useMemo(() => matchPairs.sort(() => Math.random() - 0.5), [matchPairs]);
 

@@ -6,17 +6,17 @@ const TrueOrFalseScreen = ({ content }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
-
-  if (!content) {
+  content = content.content
+  if (!content || content.length === 0 || !content[currentQuestionIndex]) {
     return <ActivityIndicator size="large" color="#0000ff" />;
   }
+
 
   const handleAnswer = (answer) => {
     if (answer === content[currentQuestionIndex].is_true) {
       setScore(score + 1);
     }
 
-    // Go to the next question or finish the game if this was the last question
     if (currentQuestionIndex < content.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {

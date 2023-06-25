@@ -7,29 +7,29 @@ const FillInTheBlanksScreen = ({ content }) => {
   const [userAnswer, setUserAnswer] = useState(null);
   const [isCorrect, setIsCorrect] = useState(null);
 
-  const gameData = content;
+  content = content.content
 
   const handleAnswer = (answer) => {
     setUserAnswer(answer);
   };
 
   const handleSubmit = () => {
-    if (userAnswer === gameData.answer) {
+    if (userAnswer === content.answer) {
       setIsCorrect(true);
     } else {
       setIsCorrect(false);
     }
   };
 
-  if (!gameData) {
+  if (!content) {
     return <Text>No game data available.</Text>;
   }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.sentence}>{gameData.sentence.replace('_____', '________')}</Text>
+      <Text style={styles.sentence}>{content.sentence.replace('_____', '________')}</Text>
       <View style={styles.wordBank}>
-        {gameData.wordBank.map((word, index) => (
+        {content.wordBank.map((word, index) => (
           <Button
             key={index}
             title={word}

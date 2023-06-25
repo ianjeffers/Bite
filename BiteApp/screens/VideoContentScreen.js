@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react'; // <-- Added useContext and useEffect
 import { View, ActivityIndicator, Text } from 'react-native';
 import ReactPlayer from 'react-player';
 import { videoContentScreenStyles as styles } from '../styles';
+import UserContext from '../contexts/UserContext'; // <-- import UserContext
 
 import video_a from '../assets/video_a.mp4';
 
@@ -13,6 +14,13 @@ const videos = [
 
 const VideoContentScreen = ({ content }) => {
   const videoSource = React.useMemo(() => videos[Math.floor(Math.random() * videos.length)], []);
+  const { userContext, setUserContext } = useContext(UserContext); // <-- Added useContext
+
+  // useEffect(() => {
+  //   if (content && videoSource) {
+  //     setUserContext({ type: 'INCREMENT_POSTS_VIEWED' }); // <-- Update PostsViewed
+  //   }
+  // }, [content, videoSource]);
 
   if (!content || !videoSource) {
     return <ActivityIndicator size="large" color="#0000ff" />;
@@ -29,7 +37,7 @@ const VideoContentScreen = ({ content }) => {
         muted={true}
       />
       <View style={styles.contentBox}>
-        <Text style={styles.content}>{content.Tweet}</Text>
+        <Text style={styles.content}>{content.content.Tweet}</Text>
       </View>
     </View>
   );

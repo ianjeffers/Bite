@@ -8,12 +8,12 @@ import QuizScreen from '../screens/QuizScreen';
 import ApiService from './ApiService';
 
 const contentEndpoints = {
-  video: '/video',
-  trueorfalse: '/trueorfalse',
+  // video: '/video',
+  // trueorfalse: '/trueorfalse',
   blanks: '/blanks',
-  matching: '/matching',
-  flashcard: '/flashcard',
-  quiz: '/quiz'
+  // matching: '/matching',
+  // flashcard: '/flashcard',
+  // quiz: '/quiz'
 };
 
 export const contentScreenComponents = {

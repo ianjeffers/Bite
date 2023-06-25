@@ -23,28 +23,33 @@ class TrueOrFalseGeneration(Resource):
         
         questions_json = {
         "questions": [
-            {"statement": "Pythagoras was a mathematician.", "is_true": True},
+            {"statement": "Janny my boy is a cool guy.", "is_true": True},
             {"statement": "Einstein invented the theory of relativity.", "is_true": True},
-            {"statement": "The sun revolves around the earth.", "is_true": False}
+            {"statement": "Rock paper scissors is the coolest game ever.", "is_true": True}
             ]
         }
         
-        return {'message': 'True or False questions generated successfully', 'content': questions_json["questions"]}, 201
+        # return {'message': 'True or False questions generated successfully', 'content': questions_json["questions"]}, 201
 
-        # Fetch Wikipedia page 
-        summary = self.wikipedia_service.get_summary(data['topic'])
-        if summary is None:
-            return {'message': 'Page does not exist'}, 404
+        # # Fetch Wikipedia page 
+        # summary = self.wikipedia_service.get_summary(data['topic'])
+        # if summary is None:
+        #     return {'message': 'Page does not exist'}, 404
 
-        prompt = 'Given the following summary, please create three true or false questions of the following form: {"questions":[{"statement":"...", "is_true": ...},...]}. Do not respond with anything besides the JSON, and do not get cut off. \n\n' + summary
-        gpt_response = self.openai_service.generate_json(prompt, 200)
-        questions_json = json.loads(gpt_response.choices[0].text)
+        # prompt = 'Given the following summary, please create three true or false questions of the following form: {"questions":[{"statement":"...", "is_true": ...},...]}. Do not respond with anything besides the JSON, and do not get cut off. \n\n' + summary
+        # gpt_response = self.openai_service.generate_json(prompt, 200)
+        # questions_json = json.loads(gpt_response.choices[0].text)
 
-        for question in questions_json["questions"]:
-            # Generate the vector for each question
-            question_str = f'Statement: {question.get("statement")} Is true: {question.get("is_true")}'
-            vector = self.hugging_face_service.generate_vector(question_str)
-            question = self.db_service.save_content(str(question), vector)
-            self.pinecone_service.upsert(question.id, vector)
+
+        # Generate the vector for the set of questions
+        try:
+            content_string = ' '.join([q['statement'] for q in questions_json["questions"]])
+            vector = self.hugging_face_service.generate_vector(content_string)
+
+            # Save the set of questions and their vector in the database
+            content_db = self.db_service.save_content(questions_json, vector)
+            self.pinecone_service.upsert(content_db.id, vector)
+        except Exception as e:
+            return {'message': 'Error in generating True or False content', 'error': str(e)}, 500
 
         return {'message': 'True or False questions generated successfully', 'content': questions_json["questions"]}, 201

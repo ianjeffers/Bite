@@ -1,11 +1,20 @@
-# services/HuggingFaceService.py
 from sentence_transformers import SentenceTransformer
 
 class HuggingFaceService:
     def __init__(self):
-        # self.model = SentenceTransformer('all-distilroberta-v1')
-        self.model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
+        try:
+            # self.model = SentenceTransformer('all-distilroberta-v1')
+            self.model = SentenceTransformer('sentence-transformers/all-mpnet-base-v2')
+        except Exception as e:
+            print(f"Could not load the SentenceTransformer model: {e}")
+            self.model = None
 
     def generate_vector(self, text):
-        vector = self.model.encode(text)
-        return vector.tolist() 
+        if self.model is None:
+            return None
+        try:
+            vector = self.model.encode(text)
+            return vector.tolist() 
+        except Exception as e:
+            print(f"Could not generate vector for text: {e}")
+            return None

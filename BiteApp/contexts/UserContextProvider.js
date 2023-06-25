@@ -8,6 +8,7 @@ const initialState = {
   preferences: [],
   skills: {},
   history: [],
+  PostsViewed: 0,
 };
 
 const reducer = (state, action) => {
@@ -22,6 +23,8 @@ const reducer = (state, action) => {
         return { ...state, preferences: [...state.preferences, action.payload] };
       case 'LOAD_STATE':
         return action.payload;
+      case 'INCREMENT_POSTS_VIEWED':
+        return { ...state, PostsViewed: state.PostsViewed + 1 };
       default:
         return state;
     }

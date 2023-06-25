@@ -12,10 +12,13 @@ class ContentSimilarity(Resource):
         parser.add_argument('context', type=str, required=True, help='Education context is required')
         data = parser.parse_args()
 
-        # Get vector representation of the context
         vector = self.hugging_face_service.generate_vector(data['context'])
 
-        # Query Pinecone for similar content
         similar_contents = self.pinecone_service.query(vector, 2)
+
+        # Only include matches with a score greater than 0.35-- manually tested with best results, should probably review given extra time
+        similar_contents = [{'id': match['id'], 'score': match['score']} for match in similar_contents if match['score'] > 0.35]
+
+        print(f"Similar contents: {similar_contents}")
 
         return {'similar_contents': similar_contents}, 200
