@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import Swiper from 'react-native-swiper/src';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { likeButtonStyles } from '../styles';
 import UserContext from '../contexts/UserContext';
 
 import FillInTheBlanksScreen from '../screens/FillInTheBlanksScreen';
@@ -33,7 +31,6 @@ const SwiperComponent = ({ contents }) => {
   };
 
   const onLike = async (content) => {
-    console.log("Liked", content)
     setUserContext({ type: 'ADD_PREFERRED_TOPIC', payload: content.topic });
     setUserContext({ type: 'TOGGLE_CONTENT_LIKE', payload: content });
   };

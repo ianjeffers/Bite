@@ -1,4 +1,3 @@
-# resources/QuizGeneration.py
 import json
 
 from flask_restful import Resource, reqparse
@@ -66,8 +65,5 @@ class QuizGeneration(Resource):
         prompt = 'Given the following summary, please create a three question multiple-choice quiz of the following form: {"quiz":[{"question":"...", "options":[...], "correctOption":"..."},...]}. Please make sure the correct answer is identical to the option provided\n\n' + page
         gpt_response = self.openai_service.generate_json(prompt, 550)
         quiz_json = json.loads(gpt_response.choices[0].text)
-
-        # TODO: Add code here to store quiz in database if necessary
-
 
         return {'message': 'Quiz generated successfully', 'content': quiz_json["quiz"]}, 201

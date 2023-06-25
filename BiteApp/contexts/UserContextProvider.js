@@ -1,5 +1,3 @@
-// contexts/UserContextProvider.js
-
 import React, { useReducer, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import UserContext from './UserContext';
@@ -15,13 +13,15 @@ const initialState = {
 const reducer = (state, action) => {
     switch (action.type) {
       case 'SET_PREFERENCES':
-        return { ...state, preferences: action.payload };
+        return { ...state, preferences: [...new Set(action.payload)] };
+      case 'RESET':
+        return initialState;
       case 'SET_SKILLS':
-        return { ...state, skills: action.payload };
+        return { ...state, skills: [...new Set(action.payload)] };
       case 'ADD_TO_HISTORY':
         return { ...state, history: [...state.history, action.payload] };
       case 'ADD_PREFERRED_TOPIC':
-        return { ...state, preferences: [...state.preferences, action.payload] };
+        return { ...state, preferences: Array.from(new Set([...state.preferences, ...action.payload])) };
       case 'LOAD_STATE':
         return { ...state, ...action.payload };
       case 'INCREMENT_POSTS_VIEWED':
@@ -45,7 +45,6 @@ const reducer = (state, action) => {
 const UserContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  // load state from AsyncStorage
   useEffect(() => {
     const loadState = async () => {
       try {
@@ -61,7 +60,6 @@ const UserContextProvider = ({ children }) => {
     loadState();
   }, []);
 
-  // save state to AsyncStorage
   useEffect(() => {
     const saveState = async () => {
       try {

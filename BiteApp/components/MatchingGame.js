@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Animated } from 'react-native';
-import { matchingGameStyles as styles } from '../styles';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { MatchingGameStyles as styles } from '../styles';
 
 const shuffleArray = (array) => {
   for (let i = array.length - 1; i > 0; i--) {
@@ -59,7 +59,7 @@ const MatchingGame = ({ content: gameData }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View>
       {gameOver ? 
         <View style={styles.gameOverContainer}>
           <Text style={styles.gameOverText}>Game Over!</Text>

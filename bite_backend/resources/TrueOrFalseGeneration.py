@@ -1,4 +1,3 @@
-# resources/TrueOrFalseGeneration.py
 import json
 from flask_restful import Resource, reqparse
 from services.DBService import DBService
@@ -16,7 +15,6 @@ class TrueOrFalseGeneration(Resource):
         self.hugging_face_service = HuggingFaceService()
 
     def post(self):
-        # Define parser and request args
         parser = reqparse.RequestParser()
         parser.add_argument('topic', type=str, required=True, help='Education topic is required')
         data = parser.parse_args()
@@ -46,7 +44,6 @@ class TrueOrFalseGeneration(Resource):
             content_string = ' '.join([q['statement'] for q in questions_json["questions"]])
             vector = self.hugging_face_service.generate_vector(content_string)
 
-            # Save the set of questions and their vector in the database
             content_db = self.db_service.save_content(questions_json, "trueorfalse")
             self.pinecone_service.upsert(content_db.id, vector)
         except Exception as e:

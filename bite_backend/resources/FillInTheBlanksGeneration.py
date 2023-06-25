@@ -1,4 +1,3 @@
-# resources/FillInTheBlanksGeneration.py
 import json
 
 from flask_restful import Resource, reqparse
@@ -37,7 +36,6 @@ class FillInTheBlanksGeneration(Resource):
             'wordBank': ['geometry', 'algebra', 'calculus', 'trigonometry']
         }
         try:
-            # Generate the vector for each sentence
             content_string = fill_in_the_blanks['sentence'] + ' ' + fill_in_the_blanks['answer'] + ' ' + ' '.join(fill_in_the_blanks['wordBank'])
             vector = self.hugging_face_service.generate_vector(content_string)
             content = self.db_service.save_content(str(fill_in_the_blanks), 'blanks')

@@ -1,6 +1,4 @@
-from .ContentList import ContentList
 from .ContentSimilarity import ContentSimilarity
-from .ContentList import ContentList
 from .FlashcardGeneration import FlashcardGeneration
 from .QuizGeneration import QuizGeneration
 from .MatchingGeneration import MatchingGeneration

@@ -1,4 +1,3 @@
-# resources/FlashcardGeneration.py
 import json
 
 from flask_restful import Resource, reqparse
@@ -17,7 +16,6 @@ class FlashcardGeneration(Resource):
         self.hugging_face_service = HuggingFaceService()
 
     def post(self):
-        # Define parser and request args
         parser = reqparse.RequestParser()
         parser.add_argument('topic', type=str, required=True, help='Education topic is required')
         data = parser.parse_args()
@@ -51,3 +49,4 @@ class FlashcardGeneration(Resource):
             return {'message': 'Error in generating Flashcard content', 'error': str(e)}, 500
 
         return {'message': 'Flashcards generated successfully', 'content': flashcards_json["content"]}, 201
+        

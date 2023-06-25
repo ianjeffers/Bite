@@ -1,8 +1,5 @@
-// screens/SwiperScreen.js
-
 import React, { useContext, useEffect, useState } from 'react';
-import { ActivityIndicator, View } from 'react-native';
-import { homeScreenStyles as styles } from '../styles';
+import { ActivityIndicator } from 'react-native';
 import UserContext from '../contexts/UserContext';
 import ContentService from '../services/ContentService';
 import SwiperComponent from '../components/SwiperComponent';

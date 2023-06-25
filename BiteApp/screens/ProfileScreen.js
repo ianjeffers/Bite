@@ -8,15 +8,18 @@ function ProfileScreen() {
   const { userContext, setUserContext } = useContext(UserContext);
   const { user, isSignedIn, isLoaded } = useUser();
   const { signOutAll } = useAuth();
-  // setUserContext({ type: 'RESET' });
+
+  const handleReset = () => {
+    setUserContext({ type: 'RESET' });
+  }
+
   if (!isLoaded) {
-    return <div>Loading...</div>;
+    return <View><Text>Loading...</Text></View>;
   }
 
   if (!isSignedIn) {
     return <RedirectToSignIn />;
   }
- 
 
   return (
     <View style={styles.profileContainer}>
@@ -24,9 +27,13 @@ function ProfileScreen() {
       <View style={styles.profileInfo}>
         <Text style={styles.profileText}><strong>Topics of Interest:</strong> {userContext.preferences.join(', ')}</Text>
         <Text style={styles.profileText}><strong>Skills:</strong> {Object.entries(userContext.skills).map(([key, value]) => `${key}: ${value}`).join(', ')}</Text>
-        {/* <Text style={styles.profileText}><strong>Number of Posts Viewed:</strong> {userContext.PostsViewed}</Text> */}
       </View>
-      <SignOutButton/>
+      <Button
+        title="Reset Profile"
+        onPress={handleReset}
+        style={styles.resetBtn}
+      />
+      <SignOutButton style={styles.signOutBtn}/>
     </View>
   );
 }

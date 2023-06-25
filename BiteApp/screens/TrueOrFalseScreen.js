@@ -24,7 +24,7 @@ const TrueOrFalseScreen = ({ content, onLike, isContentLiked, validContents, ind
     }
 
     setTimeout(() => {
-      setAnswerStatus(null);  // reset the status after 1 second
+      setAnswerStatus(null); 
       if (currentQuestionIndex < questions.length - 1) {
         setCurrentQuestionIndex(currentQuestionIndex + 1);
       } else {

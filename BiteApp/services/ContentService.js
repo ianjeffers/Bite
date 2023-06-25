@@ -1,11 +1,9 @@
-import axios from 'axios';
 import VideoContentScreen from '../screens/VideoContentScreen';
 import TrueOrFalseScreen from '../screens/TrueOrFalseScreen';
 import FillInTheBlanksScreen from '../screens/FillInTheBlanksScreen';
 import MatchingGameScreen from '../screens/MatchingGameScreen';
 import FlashcardScreen from '../screens/FlashcardScreen';
 import QuizScreen from '../screens/QuizScreen';
-import ApiService from './ApiService';
 import NewContentService from './NewContentService';
 import SimilarContentService from './SimilarContentService';
 
@@ -53,22 +51,20 @@ class ContentService {
 
   async fetchContent(contentType, topic, similar = true) {
     let fetchedContent = null;
-    let fetchedContentType = null; // Declare a new variable to store the content type
+    let fetchedContentType = null;
     similar = false
     if (similar) {
       const response = await SimilarContentService.fetchContent(topic);
-      console.log("Similar Content Service Response", response)
       if (response && response.length > 0) {
         fetchedContent = response[0].content;
         fetchedContentType = response[0].type;
       }
     }
     if (!fetchedContent) {
-      console.log("FETCHING CONTENT ", contentType)
       fetchedContent = await NewContentService.fetchContent(contentType, topic);
-      fetchedContentType = contentType; // Use the provided contentType if no similar content found
+      fetchedContentType = contentType; 
     }
-    return [fetchedContentType, fetchedContent]; // Return content and type
+    return [fetchedContentType, fetchedContent]; 
   }
   
 
@@ -90,7 +86,7 @@ class ContentService {
   async getContent(userContext, topic) {
     if (this.contentQueue.length <= 2) {
       await this.bufferContent(userContext, topic);
-      await new Promise(resolve => setTimeout(resolve, 3000)); //TODO -> Figure out how we can remove this.
+      await new Promise(resolve => setTimeout(resolve, 3000));
     }
   
     if (this.contentQueue.length > 0) {

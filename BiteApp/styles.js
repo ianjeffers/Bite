@@ -1,21 +1,82 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
-export const likeButtonStyles = StyleSheet.create({
+const COLORS = {
+  BACKGROUND_LIGHT: '#F5FCFF',
+  BACKGROUND_DARK: '#e0e0e0',
+  GREEN: '#006400',
+  RED: '#8B0000',
+  DARK_GRAY: '#444444',
+  LIGHT_GRAY: '#f9f9f9',
+  WHITE: '#FFFFFF',
+  BLACK: '#000000',
+};
+
+export const CommonStyles = StyleSheet.create({
   container: {
-    position: 'absolute',
-    right: 15,
-    top: '65%',
+    flex: 1, 
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.BACKGROUND_LIGHT,
+    width: '100%',
+  },
+  phoneScreen: {
+    aspectRatio: 0.5625,
+    width: '100%',
+    maxWidth: 425,
+    backgroundColor: '#FFF',
+  },
+  contentContainer: {
+    padding: 20,
+    backgroundColor: '#e0e0e0',
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+  },
+  correctIncorrect: {
+    fontSize: 22,  
+    fontWeight: 'bold',
+    marginTop: 20 
+  },
+  correct: {
+    color: '#006400', 
+  },
+  incorrect: {
+    color: '#8B0000', 
+  },
+  text: {
+    fontSize: 18,
+  },
+  buttonText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: COLORS.WHITE,
     padding: 10,
-    borderRadius: 50,
-    backgroundColor: 'white',
-    shadowColor: '#000',
+    borderRadius: 5,
+    marginTop: 10,
+  },
+  shadow: {
+    shadowColor: COLORS.BLACK,
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+    elevation: 4,
+  }
+});
+
+export const LikeButtonStyles = StyleSheet.create({
+  container: {
+    zIndex:100,
+    position: 'absolute',
+    right: 15,
+    top: '75%',
+    padding: 10,
+    borderRadius: 50,
+    backgroundColor: COLORS.WHITE,
+    ...CommonStyles.shadow
   },
   icon: {
     fontSize: 30,
@@ -26,15 +87,7 @@ export const likeButtonStyles = StyleSheet.create({
   },
 });
 
-
-export const fillInTheBlanksScreenStyles = StyleSheet.create({
-  container: {
-    flex: 1, 
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-    backgroundColor: '#e0e0e0'
-  },
+export const FillInTheBlanksScreenStyles = StyleSheet.create({
   sentence: {
     fontSize: 24,  
     fontWeight: 'bold',
@@ -47,42 +100,28 @@ export const fillInTheBlanksScreenStyles = StyleSheet.create({
     marginVertical: 20,
     width: '90%', 
   },
-  correct: {
-    color: '#006400',  
-    fontSize: 22,  
-    fontWeight: 'bold',
-    marginTop: 20 
-  },
-  incorrect: {
-    color: '#8B0000', 
-    fontSize: 22,  
-    fontWeight: 'bold',
-    marginTop: 20 
-  }
 });
 
-export const flashcardScreenStyles = StyleSheet.create({
-    wrapper: {
-      flex: 1,  
-      justifyContent: 'center',
-    },
-    slide: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: '#9DD6EB',
-    },
-  });
+export const FlashcardScreenStyles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    justifyContent: 'space-around',
+    paddingVertical: '20%',
+    paddingHorizontal: '5%',
+  },
+  slide: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#9DD6EB',
+  },
+});
 
-export const flashcardStyles = StyleSheet.create({
+export const FlashcardStyles = StyleSheet.create({
   card: {
-    width: '80%', 
-    height: '80%', 
     backgroundColor: '#f8f8f8',
     borderRadius: 10,
-    alignItems: 'center',
-    alignSelf: 'center',
-    justifyContent: 'center',
+    padding: '10%',
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -98,80 +137,49 @@ export const flashcardStyles = StyleSheet.create({
   },
 });
 
-
-  
-export const homeScreenStyles = StyleSheet.create({
-    container: {
-      flex: 1,
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: '#F5FCFF',
-    },
-    phoneScreen: {
-      aspectRatio: 0.5625, // Aspect ratio for most phones (9:16)
-      width: '100%',
-      maxWidth: 425, // The typical width of a phone screen
-      backgroundColor: '#FFF',
-    },
-    likeButtonContainer: {
-      position: 'absolute',
-      right: 15,
-      bottom: 15,
-    },
-  });
-  
-
-  export const matchingGameStyles = StyleSheet.create({
-    container: {
-      flex: 1,
-      padding: 10,
-      backgroundColor: '#F5FCFF',
-    },
-    gameContainer: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-    },
-    column: {
-      flex: 1,
-    },
-    gameOverContainer: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    button: {
-      margin: 5,
-      padding: 10,
-      backgroundColor: '#DDDDDD',
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderRadius: 5,
-    },
-    correct: {
-      backgroundColor: '#AED581',
-    },
-    text: {
-      fontSize: 18,
-    },
-    timerText: {
-      fontSize: 20,
-      fontWeight: 'bold',
-      textAlign: 'center',
-      marginBottom: 20,
-    },
-    scoreText: {
-      fontSize: 20,
-      fontWeight: 'bold',
-      textAlign: 'center',
-      marginBottom: 20,
-    },
-    gameOverText: {
-      fontSize: 24,
-      fontWeight: 'bold',
-      textAlign: 'center',
-    },
-  });
+export const MatchingGameStyles = StyleSheet.create({
+  gameContainer: {
+    flexDirection: 'row',
+    paddingVertical: '30%',
+    justifyContent: 'space-between',
+  },
+  column: {
+    flex: 1,
+  },
+  gameOverContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  button: {
+    margin: 5,
+    padding: 10,
+    backgroundColor: '#DDDDDD',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 5,
+  },
+  correct: {
+    backgroundColor: '#AED581',
+  },
+  timerText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  scoreText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  gameOverText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+});
 
   export const mindMapStyles = StyleSheet.create({
     container: {
@@ -228,16 +236,13 @@ export const homeScreenStyles = StyleSheet.create({
       position: 'absolute',
       left: 0,
       right: 0,
-      bottom: 100, // position adjusted above input box
+      bottom: 100, 
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: 'rgba(255, 255, 255, 0.7)',
-      zIndex: 1, // ensures the loading indicator is placed above other elements
+      zIndex: 1,
     },
   });
-  
-  
-  
 
   export const profileStyles = StyleSheet.create({
     profileContainer: {
@@ -271,12 +276,47 @@ export const homeScreenStyles = StyleSheet.create({
         fontSize: 16,
     },
 });
-
+export const quizStyles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    padding: 10,
+  },
+  button: {
+    alignItems: 'center',
+    backgroundColor: '#1e90ff',
+    padding: 10,
+    marginTop: 20,
+    borderRadius: 5,
+  },
+  buttonText: {
+    fontSize: 20,
+    color: 'white',
+  },
+  option: {
+    backgroundColor: '#f9f9f9',
+    padding: 10,
+    marginTop: 10,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#ddd',
+  },
+  optionText: {
+    fontSize: 18,
+  },
+  scoreText: {
+    fontSize: 25,
+    color: '#1e90ff',
+  },
+  questionText: {
+    fontSize: 22,
+    color: '#000',
+  },
+});
   export const quizScreenStyles = StyleSheet.create({
-    wrapper: {
-      flex: 1,
-      padding: 10,
-      backgroundColor: '#fff',
+    container: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     button: {
       alignItems: 'center',
@@ -301,14 +341,25 @@ export const homeScreenStyles = StyleSheet.create({
     },
   });
 
-  export const trueOrFalseScreenStyles = {
+  export const trueOrFalseScreenStyles = StyleSheet.create({
     wrapper: {
       flex: 1,
-      alignItems: 'center',
       justifyContent: 'center',
       padding: 16,
     },
     questionText: {
+      fontSize: 24,
+      fontWeight: 'bold',
+      textAlign: 'center',
+      marginBottom: 20,
+    },
+    correctAnswer: {
+      backgroundColor: 'lightgreen',
+    },
+    wrongAnswer: {
+      backgroundColor: 'salmon',
+    },
+    finalScoreText: {
       fontSize: 24,
       fontWeight: 'bold',
       textAlign: 'center',
@@ -319,24 +370,39 @@ export const homeScreenStyles = StyleSheet.create({
       fontWeight: 'bold',
       marginTop: 20,
     },
-  };
+    buttonText: {
+      fontSize: 18,
+      fontWeight: 'bold',
+      textAlign: 'center',
+      color: '#FFFFFF',
+      backgroundColor: '#2196F3',
+      padding: 10,
+      borderRadius: 5,
+      marginTop: 10,
+    },
+  });
+  
 
   export const videoContentScreenStyles = StyleSheet.create({
     wrapper: {
       flex: 1,
+      position: 'absolute',
+    },
+    container: {
+      flex: 1,
     },
     video: {
-      position: 'absolute',
+      position: 'relative',
       top: 0,
       left: 0,
       bottom: 0,
       right: 0,
     },
     contentBox: {
-      position: 'absolute', // this positions the view on top of the video
-      top: 80, // these values can be adjusted to fit your needs
-      left: '20%', // adjust this to make the tweet thinner
-      right: '20%', // adjust this to make the tweet thinner
+      position: 'absolute',
+      top: 80, 
+      left: '10%', 
+      right: '10%', 
       padding: 10,
       backgroundColor: 'rgba(255,255,255,0.9)',
       borderRadius: 10, 

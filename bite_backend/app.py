@@ -1,21 +1,17 @@
-# app.py
 from flask import Flask
 from flask_restful import Api
 from flask_cors import CORS
-from resources import ContentList, ContentSimilarity, FlashcardGeneration, QuizGeneration, MatchingGeneration, FillInTheBlanksGeneration, TrueOrFalseGeneration, VideoContentGeneration, TopicGeneration
-from models import Content
+from resources import ContentSimilarity, FlashcardGeneration, QuizGeneration, MatchingGeneration, FillInTheBlanksGeneration, TrueOrFalseGeneration, VideoContentGeneration, TopicGeneration
 from db import db
-import os
+
 def create_app():
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
     db.init_app(app)
 
     cors = CORS(app, resources={r"/*": {"origins": "*"}})
-    api = Api(app)  # create an API
+    api = Api(app) 
 
-    # add resources to the API
-    api.add_resource(ContentList, '/contents')
     api.add_resource(ContentSimilarity, '/similarity')
     api.add_resource(FlashcardGeneration, '/flashcard')
     api.add_resource(QuizGeneration, '/quiz')

@@ -36,7 +36,6 @@ class PineconeService:
                     {"id":str(content_id), "values":content}
                 ])
             except Exception as e:
-                print("Pinecone Service Upsert")
                 raise Exception(f"Error executing Pinecone upsert operation: {str(e)}")
 
     def query(self, query, top_k):
@@ -47,5 +46,4 @@ class PineconeService:
            
             return results['matches']
         except Exception as e:
-            print("Pinecone Service Query")
             raise Exception(f"Error executing Pinecone query operation: {str(e)}")

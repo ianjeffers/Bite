@@ -2,7 +2,7 @@ import React from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import MatchingGame from '../components/MatchingGame';
 import LikeButton from '../components/LikeButton';
-import { homeScreenStyles as styles } from '../styles';
+import { CommonStyles as styles } from '../styles';
 
 const MatchingGameScreen = ({ content, onLike, isContentLiked, validContents, index: currentIndex }) => {
   if (!content) {
@@ -13,7 +13,6 @@ const MatchingGameScreen = ({ content, onLike, isContentLiked, validContents, in
     );
   }
 
-  // Access the Questions array for mapping
   const gameData = content.content.Questions.map(item => ({
     Question: item.Question,
     Answer: item.Answer
@@ -21,14 +20,12 @@ const MatchingGameScreen = ({ content, onLike, isContentLiked, validContents, in
 
   return (
     <View style={styles.container}>
-      <View style={styles.phoneScreen}>
         <MatchingGame content={gameData} />
         <LikeButton 
           onLike={() => onLike(validContents[currentIndex])} 
           isLiked={isContentLiked(validContents[currentIndex])} 
           style={styles.likeButtonContainer}
         />
-      </View>
     </View>
   );
 };

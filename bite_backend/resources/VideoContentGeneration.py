@@ -1,4 +1,3 @@
-# resources/VideoContentGeneration.py
 import json
 
 from flask_restful import Resource, reqparse
@@ -19,7 +18,6 @@ class VideoContentGeneration(Resource):
         self.moods = ['humorous', 'nostalgic', 'sad', 'ragebait'] 
 
     def post(self):
-        # Define parser and request args
         parser = reqparse.RequestParser()
         parser.add_argument('topic', type=str, required=True, help='Education topic is required')
         data = parser.parse_args()

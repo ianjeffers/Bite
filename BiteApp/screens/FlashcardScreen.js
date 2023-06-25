@@ -1,11 +1,9 @@
-// screens/FlashcardScreen.js
 import React from 'react';
 import Swiper from 'react-native-swiper/src';
 import { View, ActivityIndicator } from 'react-native';
 import Flashcard from '../components/Flashcard';
 import LikeButton from '../components/LikeButton';
-import { flashcardScreenStyles as styles } from '../styles';
-import { homeScreenStyles } from '../styles';
+import { FlashcardScreenStyles as styles } from '../styles';
 
 const FlashcardScreen = ({ content: { content: flashcards }, onLike, isContentLiked, validContents, index: currentIndex }) => {
   if (!flashcards) {

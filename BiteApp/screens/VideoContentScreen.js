@@ -1,16 +1,14 @@
-import React, { useContext, useEffect } from 'react'; // <-- Added useContext and useEffect
+import React, { useContext } from 'react';
 import { View, ActivityIndicator, Text } from 'react-native';
 import ReactPlayer from 'react-player';
 import { videoContentScreenStyles as styles } from '../styles';
-import UserContext from '../contexts/UserContext'; // <-- import UserContext
+import UserContext from '../contexts/UserContext'; 
 import LikeButton from '../components/LikeButton';
 
 import video_a from '../assets/video_a.mp4';
 
 const videos = [
   video_a,
-  // 'path/to/video_b.mp4',
-  // 'path/to/video_c.mp4',
 ];
 
 const VideoContentScreen = ({ content, onLike, isContentLiked, validContents, index: currentIndex }) => {

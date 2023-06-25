@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { likeButtonStyles as styles } from '../styles';
+import { LikeButtonStyles as styles } from '../styles';
 
 const LikeButton = ({ onLike, isLiked }) => {
   return (
@@ -15,4 +15,3 @@ const LikeButton = ({ onLike, isLiked }) => {
 };
 
 export default LikeButton;
-

@@ -1,4 +1,3 @@
-# resources/TopicGeneration.py
 from flask_restful import Resource, reqparse
 from services.TopicService import TopicService
 

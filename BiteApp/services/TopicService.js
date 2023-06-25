@@ -7,7 +7,7 @@ class TopicService {
         return response.data.related_topics;
     } catch (error) {
       console.error('Failed to fetch related topics:', error);
-      return []; // Return an empty array in case of error
+      return [];
     }
   }
 }

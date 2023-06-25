@@ -1,5 +1,3 @@
-// components/BottomNavBar.js
-
 import * as React from 'react';
 import { BottomNavigation } from 'react-native-paper';
 import SwiperScreen from '../screens/SwiperScreen';

@@ -1,9 +1,7 @@
-// screens/HomeScreen.js
-
 import React from 'react';
 import { View } from 'react-native';
 import BottomNavBar from '../components/BottomNavBar';
-import { homeScreenStyles as styles } from '../styles';
+import { CommonStyles as styles } from '../styles';
 
 const HomeScreen = () => {
   return (

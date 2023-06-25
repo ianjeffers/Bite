@@ -20,7 +20,6 @@ class ContentSimilarity(Resource):
 
         similar_contents = self.pinecone_service.query(vector, 2)
 
-        # Only include matches with a score greater than 0.35-- manually tested with best results, should probably review given extra time
         similar_contents = [{'id': match['id'], 'score': match['score']} for match in similar_contents if match['score'] > 0.35]
         similar_content_objects = []
         for content in similar_contents:

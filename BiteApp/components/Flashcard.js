@@ -1,7 +1,6 @@
-// components/Flashcard.js
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { flashcardStyles as styles } from '../styles';
+import { Text, TouchableOpacity } from 'react-native';
+import { FlashcardStyles as styles } from '../styles';
 
 const Flashcard = ({ question, answer }) => {
   const [showAnswer, setShowAnswer] = useState(false);

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { fillInTheBlanksScreenStyles as styles } from '../styles';
+import { View, Text } from 'react-native';
+import { FillInTheBlanksScreenStyles as styles } from '../styles';
+import { CommonStyles as commonStyles } from '../styles';
 import { Button } from 'react-native-elements';
 import LikeButton from '../components/LikeButton';
 
@@ -27,12 +28,13 @@ const FillInTheBlanksScreen = ({ content, onLike, isContentLiked, validContents,
   }
 
   return (
-    <View style={styles.container}>
-      <LikeButton onLike={() => onLike(validContents[currentIndex])} isLiked={isContentLiked(validContents[currentIndex])} />
-      <View style={styles.contentContainer}>
-        <Text style={styles.sentence}>{content.sentence.replace('_____', '________')}</Text>
-        <View style={styles.wordBank}>
-          {content.wordBank.map((word, index) => (
+    <View style={[commonStyles.container, {flexDirection: 'column', justifyContent: 'space-between', paddingBottom:'10%'}]}>
+      <View>
+        <LikeButton onLike={() => onLike(validContents[currentIndex])} isLiked={isContentLiked(validContents[currentIndex])} />
+        <View style={styles.contentContainer}>
+          <Text style={styles.sentence}>{content.sentence.replace('_____', '________')}</Text>
+          <View style={styles.wordBank}>
+            {content.wordBank.map((word, index) => (
             <Button
               key={index}
               title={word}
@@ -52,13 +54,14 @@ const FillInTheBlanksScreen = ({ content, onLike, isContentLiked, validContents,
             />
           ))}
         </View>
-        <Button title="Submit" onPress={handleSubmit} color="#7bad9c" />
-        {isCorrect !== null && (
-          <Text style={isCorrect ? styles.correct : styles.incorrect}>
-            {isCorrect ? 'Correct!' : 'Incorrect, please try again.'}
-          </Text>
-        )}
+          {isCorrect !== null && (
+            <Text style={isCorrect ? styles.correct : styles.incorrect}>
+              {isCorrect ? 'Correct!' : 'Incorrect, please try again.'}
+            </Text>
+          )}
+        </View>
       </View>
+      <Button title="Submit" onPress={handleSubmit} />
     </View>
   );
 };
