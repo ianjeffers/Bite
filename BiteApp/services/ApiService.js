@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const ApiService = axios.create({
-  baseURL: '18.217.80.196:5000', 
+  baseURL: 'http://18.217.80.196:5000/', 
   headers: {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*', 
