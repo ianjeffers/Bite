@@ -4,7 +4,7 @@ class ApiService {
   
   async get(endpoint, params) {
     try {
-      const response = await axios.get(`http://18.217.80.196:5000/${endpoint}`, { params });
+      const response = await axios.get(`http://18.217.80.196:5000${endpoint}`, { params });
       return response.data;
     } catch (error) {
       if (error.response && error.response.status === 500) {
