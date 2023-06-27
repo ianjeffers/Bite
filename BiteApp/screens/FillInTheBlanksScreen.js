@@ -28,7 +28,7 @@ const FillInTheBlanksScreen = ({ content, onLike, isContentLiked, validContents,
   }
 
   return (
-    <View style={[commonStyles.container, {flexDirection: 'column', justifyContent: 'space-between', paddingBottom:'10%'}]}>
+    <View style={[commonStyles.container, {flexDirection: 'column', justifyContent: 'space-between', paddingTop:'10%', paddingHorizontal:'10%'}]}>
       <View>
         <LikeButton onLike={() => onLike(validContents[currentIndex])} isLiked={isContentLiked(validContents[currentIndex])} />
         <View style={styles.contentContainer}>

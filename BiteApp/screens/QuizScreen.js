@@ -10,7 +10,7 @@ const QuizScreen = ({ content, onLike, isContentLiked, validContents, index: cur
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.phoneScreen, {paddingTop: '20%'}]}>
       <LikeButton onLike={() => onLike(validContents[currentIndex])} isLiked={isContentLiked(validContents[currentIndex])} />
       <Quiz content={content} />
     </View>

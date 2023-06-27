@@ -7,8 +7,8 @@ class TopicService:
 
     def generate_related_topics(self, topic, reason):
         
-        dummy_related_topics = ["Maths", "Stats", "Geo"]
-        return dummy_related_topics
+        # dummy_related_topics = ["Maths", "Stats", "Geo"]
+        # return dummy_related_topics
 
         if reason == 'mastered':
             prompt = f'Given that a user has mastered the topic "{topic}", generate a list of related topics under 10 characters they might be interested in studying next in the following format: {{"related_topics": ["Topic1", "Topic2", "Topic3"]}}.'

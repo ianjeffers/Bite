@@ -8,8 +8,11 @@ const SwiperScreen = () => {
   const { userContext, setUserContext } = useContext(UserContext);
   const [contents, setContents] = useState([]);
   const [loading, setLoading] = useState(false);
-
-  let initialTopic = "math";
+  
+  let topics = ['math', 'english', 'science', 'technology'];
+  let initialTopic = userContext.preferences.length > 0 ? 
+                      userContext.preferences[Math.floor(Math.random()*userContext.preferences.length)] : 
+                      topics[Math.floor(Math.random()*topics.length)];
 
   const fetchContents = async () => {
     if (loading) { 

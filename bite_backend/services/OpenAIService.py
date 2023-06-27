@@ -14,6 +14,7 @@ class OpenAIService:
     def generate_json(self, context, tokens):
         try:
             gpt_response = openai.Completion.create(engine="text-davinci-003", prompt=context, max_tokens=tokens)
+            print("GPT RESPONSE", gpt_response)
             return gpt_response
         except openai.InvalidRequestError as e:
             print("Invalid request:", e)

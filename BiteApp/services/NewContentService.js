@@ -10,7 +10,7 @@ class NewContentService {
       if ([200, 201].includes(response.status)) {
         return response.data.content;
       } else {
-        console.error('Unexpected response status');
+        console.error('Unexpected response status', response);
       }
     } catch (error) {
       console.error('Failed to fetch new content:', error);

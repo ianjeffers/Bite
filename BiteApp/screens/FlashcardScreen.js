@@ -14,7 +14,7 @@ const FlashcardScreen = ({ content: { content: flashcards }, onLike, isContentLi
         <View style={{ position: 'relative', flex: 1 }}>
           <LikeButton onLike={() => onLike(validContents[currentIndex])} isLiked={isContentLiked(validContents[currentIndex])} />
           <View style={styles.wrapper}>
-            <Swiper showsPagination={true} loop={false} showsButtons={false}>
+            <Swiper showsPagination={false} loop={false} showsButtons={false}>
               {flashcards.map((card, index) => (
                 <Flashcard key={index} question={card.Question} answer={card.Answer} />
               ))}

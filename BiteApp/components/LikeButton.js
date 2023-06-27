@@ -7,7 +7,7 @@ const LikeButton = ({ onLike, isLiked }) => {
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={onLike}
+      onPress={() => {}}
     >
       <Icon name="heart" style={[styles.icon, isLiked ? styles.liked : null]} />
     </TouchableOpacity>

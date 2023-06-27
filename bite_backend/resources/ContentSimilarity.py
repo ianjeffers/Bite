@@ -2,13 +2,14 @@ from flask_restful import Resource, reqparse
 from services.PineconeService import PineconeService
 from services.HuggingFaceService import HuggingFaceService
 from services.DBService import DBService
+from flask import current_app
 import json
 
 
 class ContentSimilarity(Resource):
     def __init__(self):
         self.pinecone_service = PineconeService(index_name='bite')
-        self.hugging_face_service = HuggingFaceService()
+        self.hugging_face_service = current_app.hugging_face_service
         self.db_service = DBService()
 
     def post(self):
